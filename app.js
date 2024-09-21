@@ -27,6 +27,7 @@ app.get("/api/clienti", async (req, res) => {
 });
 // get: search by Nome, Cognome or Scuola
 app.use("/api/clienti/search", clientiRoute);
+
 app.post("/api/clienti", async (req, res) => {
   try {
     const addingClient = await Client.create(req.body);
@@ -36,7 +37,20 @@ app.post("/api/clienti", async (req, res) => {
   }
 });
 // app.use("api/clienti", clientiRoute);
+app.put("/api/clienti", async (req, res) => {
+  try {
+    const { nome } = req.params;
+    const updateClient = await Client.findByIdAndUpdate(nome, req.body);
 
+    if (!updateClient) {
+      return res.status(404).json({ message: error.message });
+    }
+    const updatedProduct = await Client.findById(nome);
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 // mongodb & port listening
 mongoose
   .connect(
