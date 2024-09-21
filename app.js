@@ -39,13 +39,17 @@ app.post("/api/clienti", async (req, res) => {
 // app.use("api/clienti", clientiRoute);
 app.put("/api/clienti", async (req, res) => {
   try {
-    const { nome } = req.params;
-    const updateClient = await Client.findByIdAndUpdate(nome, req.body);
+    const { nome, cognome } = req.params;
+    const updateClient = await Client.findByIdAndUpdate(
+      nome,
+      cognome,
+      req.body
+    );
 
     if (!updateClient) {
       return res.status(404).json({ message: error.message });
     }
-    const updatedProduct = await Client.findById(nome);
+    const updatedProduct = await Client.findById(nome, cognome);
     res.status(200).json(updatedProduct);
   } catch (error) {
     res.status(500).json({ message: error.message });
