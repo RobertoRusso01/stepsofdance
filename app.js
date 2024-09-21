@@ -39,18 +39,29 @@ app.post("/api/clienti", async (req, res) => {
 // app.use("api/clienti", clientiRoute);
 app.put("/api/clienti", async (req, res) => {
   try {
-    const { nome, cognome } = req.params;
-    const updateClient = await Client.findByIdAndUpdate(
-      nome,
-      cognome,
-      req.body
+    const { nome, cognome } = req.body; // Recupera nome e cognome dal corpo della richiesta
+
+    // Verifica che entrambi nome e cognome siano forniti
+    if (!nome || !cognome) {
+      return res.status(400).json({
+        message: "Nome e cognome sono necessari per aggiornare il cliente.",
+      });
+    }
+
+    // Cerca il cliente in base a nome e cognome
+    const client = await Client.findOneAndUpdate(
+      { nome: nome, cognome: cognome }, // Filtro per trovare il cliente
+      req.body, // Aggiorna i campi forniti nel corpo della richiesta
+      { new: true } // Restituisce il cliente aggiornato
     );
 
-    if (!updateClient) {
-      return res.status(404).json({ message: error.message });
+    // Se non viene trovato il cliente
+    if (!client) {
+      return res.status(404).json({ message: "Cliente non trovato." });
     }
-    const updatedProduct = await Client.findById(nome, cognome);
-    res.status(200).json(updatedProduct);
+
+    // Restituisce il cliente aggiornato
+    res.status(200).json(client);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
