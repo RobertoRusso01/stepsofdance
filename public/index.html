@@ -20,6 +20,17 @@
       .container {
         margin-top: 20px;
       }
+      #backToTop {
+        background-color: #007bff; /* Blu */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        z-index: 1000;
+      }
+      #backToTop:hover {
+        background-color: #0056b3; /* Blu scuro */
+      }
 
       .btn-custom {
         background-color: #28a745; /* Verde chiaro */
@@ -194,7 +205,13 @@
         <button type="submit" class="btn btn-custom btn-block">Aggiungi</button>
       </form>
     </div>
-
+    <button
+      id="backToTop"
+      class="btn btn-secondary"
+      style="display: none; position: fixed; bottom: 20px; right: 20px"
+    >
+      Torna in cima
+    </button>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

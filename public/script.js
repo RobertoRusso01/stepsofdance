@@ -234,3 +234,19 @@ closeSearchButtonSurname.addEventListener("click", () => {
   searchResultsSurname.innerHTML = ""; // Cancella i risultati di ricerca
   searchClientInputSurname.value = ""; // Pulisci il campo di ricerca
 });
+
+$(document).ready(function () {
+  // Mostra il pulsante quando si scorre giù
+  $(window).scroll(function () {
+    if ($(this).scrollTop() > 200) {
+      $("#backToTop").fadeIn();
+    } else {
+      $("#backToTop").fadeOut();
+    }
+  });
+
+  // Quando il pulsante viene cliccato, torna in cima
+  $("#backToTop").click(function () {
+    $("html, body").animate({ scrollTop: 0 }, 600);
+  });
+});
