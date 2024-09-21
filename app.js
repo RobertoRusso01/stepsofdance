@@ -36,7 +36,7 @@ app.post("/api/clienti", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-// app.use("api/clienti", clientiRoute);
+// put : Aggiorna clienti
 app.put("/api/clienti", async (req, res) => {
   try {
     const { nome, cognome } = req.body; // Recupera nome e cognome dal corpo della richiesta
@@ -66,6 +66,21 @@ app.put("/api/clienti", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+// delete: Elimina clienti
+app.delete("/api/clienti/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await Client.findByIdAndDelete(id);
+    if (!result) {
+      return res.status(404).send("Cliente non trovato");
+    }
+    res.status(200).send("Cliente eliminato con successo");
+  } catch (error) {
+    console.error(error); // Aggiungi questo per il logging
+    res.status(500).send("Errore durante l'eliminazione del cliente");
+  }
+});
+
 // mongodb & port listening
 mongoose
   .connect(

@@ -22,6 +22,10 @@ const editClientFormContainer = document.getElementById(
   "editClientFormContainer"
 );
 const editClientForm = document.getElementById("editClientForm");
+const searchClientDeleteInput = document.getElementById("searchClientDelete");
+const searchButtonDelete = document.getElementById("searchButtonDelete");
+const deleteResults = document.getElementById("deleteResults");
+const deleteClientButton = document.getElementById("deleteClientButton");
 
 fetchClientsButton.addEventListener("click", async () => {
   const response = await fetch("http://3.67.185.158:3000/api/clienti/");
@@ -251,6 +255,7 @@ backToTopButton.addEventListener("click", () => {
   searchClientInputSchool.value = ""; // Pulisci il campo di ricerca
 });
 
+// edit client form
 searchButtonEdit.addEventListener("click", async () => {
   const searchTerm = searchClientInputToEdit.value.trim();
 
@@ -265,23 +270,17 @@ searchButtonEdit.addEventListener("click", async () => {
 
   // Crea una query string dinamica
   let queryParams = [];
-
-  // Aggiungi ogni termine come possibile filtro, rispettando l'ordine
   if (searchTerms[0]) queryParams.push(`nome=${searchTerms[0]}`);
   if (searchTerms[1]) queryParams.push(`cognome=${searchTerms[1]}`);
 
-  // Unisci i parametri in una query string
   const queryString = queryParams.join("&");
 
   // Fai la chiamata API con la query string generata
   const response = await fetch(
     `http://3.67.185.158:3000/api/clienti/search?${queryString}`
   );
-
-  // Ricevi i risultati dalla risposta dell'API
   const results = await response.json();
 
-  // Controlla se è stato trovato un cliente
   if (results.length > 0) {
     const client = results[0]; // Prendi il primo cliente trovato
 
@@ -301,11 +300,9 @@ searchButtonEdit.addEventListener("click", async () => {
   }
 });
 
-// Funzionalità per inviare la modifica del cliente
 editClientForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  // Creazione dell'oggetto con i nuovi dati del cliente
   const updatedClient = {
     nome: document.getElementById("editName").value,
     cognome: document.getElementById("editSurname").value,
@@ -316,29 +313,100 @@ editClientForm.addEventListener("submit", async (event) => {
   };
 
   try {
-    // Chiamata PUT per aggiornare il cliente
-    const response = await fetch(
-      `http://3.67.185.158:3000/api/clienti/${client._id}`, // client._id è l'ID del cliente trovato
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedClient),
-      }
-    );
+    const response = await fetch("http://3.67.185.158:3000/api/clienti", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedClient),
+    });
 
-    // Controlla la risposta del server
     if (response.ok) {
-      alert("Cliente modificato con successo!");
+      alert("Cliente aggiornato con successo!");
       editClientFormContainer.style.display = "none"; // Nascondi il form di modifica
+      searchClientInputToEdit.value = ""; // Pulisci il campo di ricerca
     } else {
       const errorData = await response.json();
       console.error("Errore dall'API:", errorData);
-      alert("Errore durante la modifica del cliente.");
+      alert("Errore durante l'aggiornamento del cliente.");
     }
   } catch (error) {
     console.error("Errore di rete o di fetch:", error);
-    alert("Errore di rete durante la modifica del cliente.");
+    alert("Errore di rete durante l'aggiornamento del cliente.");
+  }
+});
+
+let clientIdToDelete = null; // Variabile per memorizzare l'ID del cliente da eliminare
+
+searchButtonDelete.addEventListener("click", async () => {
+  const searchTerm = searchClientDeleteInput.value.trim();
+
+  if (!searchTerm) {
+    alert("Inserisci un termine di ricerca.");
+    return;
+  }
+
+  const searchTerms = searchTerm.split(" ").filter((term) => term);
+  let queryParams = [];
+  if (searchTerms[0]) queryParams.push(`nome=${searchTerms[0]}`);
+  if (searchTerms[1]) queryParams.push(`cognome=${searchTerms[1]}`);
+
+  const queryString = queryParams.join("&");
+  const response = await fetch(
+    `http://3.67.185.158:3000/api/clienti/search?${queryString}`
+  );
+  const results = await response.json();
+
+  console.log("Risultati della ricerca:", results); // Aggiungi questa riga per debug
+
+  if (results.length > 0) {
+    const client = results[0]; // Prendi il primo cliente trovato
+    clientIdToDelete = client._id; // Usa '_id' per accedere all'ID corretto
+
+    console.log("ID del cliente da eliminare:", clientIdToDelete); // Dovrebbe ora stampare l'ID corretto
+
+    deleteResults.innerHTML = `
+      <div class="result-item client-row">
+        <span>${client.nome}</span>
+        <span>${client.cognome}</span>
+        <span>${client.scuola}</span>
+        <span>${client.telefono}</span>
+        <span>${client.note}</span>
+      </div>
+    `;
+    deleteClientButton.style.display = "block"; // Mostra il pulsante elimina
+  } else {
+    deleteResults.innerHTML = "<p>Nessun cliente trovato.</p>";
+    deleteClientButton.style.display = "none"; // Nascondi il pulsante elimina
+  }
+});
+
+// Sposta questo codice fuori dalla funzione di ricerca
+deleteClientButton.addEventListener("click", async () => {
+  if (!clientIdToDelete) {
+    alert("Nessun cliente selezionato per l'eliminazione.");
+    return;
+  }
+
+  try {
+    const deleteResponse = await fetch(
+      `http://3.67.185.158:3000/api/clienti/${clientIdToDelete}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (deleteResponse.ok) {
+      alert("Cliente eliminato con successo!");
+      deleteResults.innerHTML = ""; // Pulisci i risultati
+      searchClientDeleteInput.value = ""; // Pulisci il campo di ricerca
+      clientIdToDelete = null; // Resetta l'ID del cliente
+      deleteClientButton.style.display = "none"; // Nascondi il pulsante elimina
+    } else {
+      alert("Errore durante l'eliminazione del cliente.");
+    }
+  } catch (error) {
+    console.error("Errore di rete durante l'eliminazione:", error);
+    alert("Errore di rete durante l'eliminazione del cliente.");
   }
 });
