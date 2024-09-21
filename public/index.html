@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Clienti</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .container {
+        margin-top: 20px;
+      }
+
+      .btn-custom {
+        background-color: #28a745; /* Verde chiaro */
+        color: white;
+      }
+      .btn-custom:hover {
+        background-color: #218838; /* Verde scuro */
+      }
+      .form-control:focus {
+        border-color: #dc3545; /* Rosso */
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      }
+      .result-item {
+        border: 1px solid #dc3545; /* Rosso */
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+        background-color: #fff; /* Bianco */
+      }
+      .client-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #dc3545; /* Rosso */
+        padding: 10px 0;
+      }
+
+      .client-row span {
+        flex: 1; /* Espande gli elementi per occupare spazio uguale */
+        text-align: center; /* Centra il testo */
+      }
+
+      .client-row span:not(:last-child) {
+        border-right: 1px solid #dc3545; /* Righe verticali tra i campi */
+        padding: 10px; /* Spaziatura interna */
+      }
+      .search-results {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="text-align: center; margin-bottom: 20px">
+      <img
+        src="./stepslogo.png"
+        alt="Logo"
+        class="img-fluid"
+        style="max-width: 350px; height: auto"
+      />
+    </div>
+    <div class="container">
+      <h1 class="text-center">Dashboard Clienti</h1>
+
+      <button id="fetchClients" class="btn btn-custom btn-block">
+        Visualizza tutti i clienti
+      </button>
+      <button id="closeSearch" class="btn btn-secondary btn-block">
+        Chiudi Ricerca
+      </button>
+      <div class="input-group-append"></div>
+      <div id="clientList" class="mb-4"></div>
+
+      <h2>Cerca Cliente</h2>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="searchClient"
+          class="form-control"
+          placeholder="Cerca cliente (Digita Nome e Cognome o solo il Nome)"
+          aria-label="Cerca cliente..."
+        />
+        <div class="input-group-append">
+          <button id="searchButton" class="btn btn-danger">Cerca</button>
+          <button id="closeSearch2" class="btn btn-secondary btn-block">
+            Chiudi Ricerca
+          </button>
+        </div>
+      </div>
+
+      <div id="searchResults" class="search-results"></div>
+
+      <h2>Cerca clienti per Cognome</h2>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="searchClientSurname"
+          class="form-control"
+          placeholder="Cerca cognome..."
+          aria-label="Cerca cognome..."
+        />
+        <div class="input-group-append">
+          <button id="searchButtonSurname" class="btn btn-danger">Cerca</button>
+          <button id="closeSearchSurname" class="btn btn-secondary btn-block">
+            Chiudi Ricerca
+          </button>
+        </div>
+      </div>
+
+      <div id="searchResultsSurname" class="search-results"></div>
+
+      <h2>Cerca clienti per Scuola</h2>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="searchClientSchool"
+          class="form-control"
+          placeholder="Cerca scuola..."
+          aria-label="Cerca scuola..."
+        />
+        <div class="input-group-append">
+          <button id="searchButtonSchool" class="btn btn-danger">Cerca</button>
+          <button id="closeSearchSchool" class="btn btn-secondary btn-block">
+            Chiudi Ricerca
+          </button>
+        </div>
+      </div>
+
+      <div id="searchResultsSchool" class="search-results"></div>
+
+      <h2>Aggiungi Cliente</h2>
+      <form id="addClientForm">
+        <div class="form-group">
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            placeholder="Nome"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="surname"
+            class="form-control"
+            placeholder="Cognome"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="telephone"
+            class="form-control"
+            placeholder="Telefono"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="school"
+            class="form-control"
+            placeholder="Scuola"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="location"
+            class="form-control"
+            placeholder="Luogo"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <textarea
+            id="notes"
+            class="form-control"
+            placeholder="Note"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-custom btn-block">Aggiungi</button>
+      </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
