@@ -36,21 +36,20 @@
       }
       .client-row {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column; /* Cambiato per schermi piccoli */
         border-bottom: 1px solid #dc3545; /* Rosso */
         padding: 10px 0;
       }
 
       .client-row span {
-        flex: 1; /* Espande gli elementi per occupare spazio uguale */
-        text-align: center; /* Centra il testo */
+        text-align: left; /* Allinea il testo a sinistra */
+        margin-bottom: 5px; /* Spaziatura verticale */
       }
 
-      .client-row span:not(:last-child) {
-        border-right: 1px solid #dc3545; /* Righe verticali tra i campi */
-        padding: 10px; /* Spaziatura interna */
+      .client-row span:last-child {
+        margin-bottom: 0; /* Rimuove il margine dall'ultimo elemento */
       }
+
       .search-results {
         margin-top: 20px;
       }
@@ -68,13 +67,12 @@
     <div class="container">
       <h1 class="text-center">Dashboard Clienti</h1>
 
-      <button id="fetchClients" class="btn btn-custom btn-block">
+      <button id="fetchClients" class="btn btn-custom btn-block mb-2">
         Visualizza tutti i clienti
       </button>
-      <button id="closeSearch" class="btn btn-secondary btn-block">
+      <button id="closeSearch" class="btn btn-secondary btn-block mb-4">
         Chiudi Ricerca
       </button>
-      <div class="input-group-append"></div>
       <div id="clientList" class="mb-4"></div>
 
       <h2>Cerca Cliente</h2>
@@ -88,7 +86,7 @@
         />
         <div class="input-group-append">
           <button id="searchButton" class="btn btn-danger">Cerca</button>
-          <button id="closeSearch2" class="btn btn-secondary btn-block">
+          <button id="closeSearch2" class="btn btn-secondary">
             Chiudi Ricerca
           </button>
         </div>
@@ -107,7 +105,7 @@
         />
         <div class="input-group-append">
           <button id="searchButtonSurname" class="btn btn-danger">Cerca</button>
-          <button id="closeSearchSurname" class="btn btn-secondary btn-block">
+          <button id="closeSearchSurname" class="btn btn-secondary">
             Chiudi Ricerca
           </button>
         </div>
@@ -126,7 +124,7 @@
         />
         <div class="input-group-append">
           <button id="searchButtonSchool" class="btn btn-danger">Cerca</button>
-          <button id="closeSearchSchool" class="btn btn-secondary btn-block">
+          <button id="closeSearchSchool" class="btn btn-secondary">
             Chiudi Ricerca
           </button>
         </div>
