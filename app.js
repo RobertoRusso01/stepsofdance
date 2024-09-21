@@ -1,12 +1,15 @@
 const express = require("express");
 const PORT = 3000;
 const app = express();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const clientiRoute = require("./routes/clienti.route");
 const Client = require("./models/clients.schema");
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+
 ////////////////////
 app.use(express.static("public"));
 app.get("/", (req, res) => {
