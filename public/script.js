@@ -18,7 +18,7 @@ const closeSearchButtonSurname = document.getElementById("closeSearchSurname");
 const searchResultsSurname = document.getElementById("searchResultsSurname");
 
 fetchClientsButton.addEventListener("click", async () => {
-  const response = await fetch("https://3.67.185.158:3000/api/clienti/");
+  const response = await fetch("http://3.67.185.158:3000/api/clienti/");
   const clients = await response.json();
   clientList.innerHTML = clients
     .map(
@@ -60,7 +60,7 @@ searchButton.addEventListener("click", async () => {
 
   // Fai la chiamata API con la query string generata
   const response = await fetch(
-    `https://3.67.185.158:3000/api/clienti/search?${queryString}`
+    `http://3.67.185.158:3000/api/clienti/search?${queryString}`
   );
 
   // Ricevi i risultati dalla risposta dell'API
@@ -114,7 +114,7 @@ addClientForm.addEventListener("submit", async (event) => {
   console.log("Nuovo cliente:", newClient);
 
   try {
-    const response = await fetch("https://3.67.185.158:3000/api/clienti", {
+    const response = await fetch("http://3.67.185.158:3000/api/clienti", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -155,7 +155,7 @@ searchButtonSchool.addEventListener("click", async () => {
 
   // Fai la chiamata API con la query string generata
   const response = await fetch(
-    `https://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`
+    `http://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`
   );
 
   // Ricevi i risultati dalla risposta dell'API
@@ -202,7 +202,7 @@ searchButtonSurname.addEventListener("click", async () => {
 
   // Fai la chiamata API con la query string generata
   const response = await fetch(
-    `https://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`
+    `http://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`
   );
 
   // Ricevi i risultati dalla risposta dell'API
