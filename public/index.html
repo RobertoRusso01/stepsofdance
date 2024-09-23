@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Clienti</title>
+    <title>Steps Of Dance | Dashboard Clienti</title>
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
@@ -110,17 +110,20 @@
       />
     </div>
     <div class="container">
-      <h1 class="text-center">Dashboard Clienti</h1>
+      <h1 class="text-center display-4">Dashboard Clienti</h1>
+      <p class="lead text-center">
+        Benvenuto nella dashboard di Steps Of Dance Store
+      </p>
 
-      <button id="fetchClients" class="btn btn-custom btn-block mb-2">
+      <button id="fetchClients" class="btn btn-custom btn-block mb-2 mt-4">
         Visualizza tutti i clienti
       </button>
-      <button id="closeSearch" class="btn btn-secondary btn-block mb-4">
+      <button id="closeSearch" class="btn btn-dark btn-block mb-4 mt-4">
         Chiudi Ricerca
       </button>
       <div id="clientList" class="mb-4"></div>
 
-      <h2>Cerca Cliente</h2>
+      <h2 class="mt-4">Cerca Cliente</h2>
       <div class="input-group mb-3">
         <input
           type="text"
@@ -131,15 +134,13 @@
         />
         <div class="input-group-append">
           <button id="searchButton" class="btn btn-danger">Cerca</button>
-          <button id="closeSearch2" class="btn btn-secondary">
-            Chiudi Ricerca
-          </button>
+          <button id="closeSearch2" class="btn btn-dark">Chiudi Ricerca</button>
         </div>
       </div>
 
       <div id="searchResults" class="search-results"></div>
 
-      <h2>Cerca clienti per Cognome</h2>
+      <h2 class="mt-4">Cerca clienti per Cognome</h2>
       <div class="input-group mb-3">
         <input
           type="text"
@@ -150,7 +151,7 @@
         />
         <div class="input-group-append">
           <button id="searchButtonSurname" class="btn btn-danger">Cerca</button>
-          <button id="closeSearchSurname" class="btn btn-secondary">
+          <button id="closeSearchSurname" class="btn btn-dark">
             Chiudi Ricerca
           </button>
         </div>
@@ -158,7 +159,7 @@
 
       <div id="searchResultsSurname" class="search-results"></div>
 
-      <h2>Cerca clienti per Scuola</h2>
+      <h2 class="mt-4">Cerca clienti per Scuola</h2>
       <div class="input-group mb-3">
         <input
           type="text"
@@ -169,7 +170,7 @@
         />
         <div class="input-group-append">
           <button id="searchButtonSchool" class="btn btn-danger">Cerca</button>
-          <button id="closeSearchSchool" class="btn btn-secondary">
+          <button id="closeSearchSchool" class="btn btn-dark">
             Chiudi Ricerca
           </button>
         </div>
@@ -177,7 +178,7 @@
 
       <div id="searchResultsSchool" class="search-results"></div>
 
-      <h2>Aggiungi Cliente</h2>
+      <h2 class="mt-4">Aggiungi Cliente</h2>
       <form id="addClientForm">
         <div class="form-group">
           <input
@@ -233,104 +234,106 @@
         </div>
         <button type="submit" class="btn btn-custom btn-block">Aggiungi</button>
       </form>
-    </div>
-    <h2>Modifica Cliente</h2>
-    <div>
+      <h2 class="mt-4">Modifica Cliente</h2>
+      <div>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            id="searchClientToEdit"
+            class="form-control"
+            placeholder="Cerca cliente da modificare (Nome e Cognome)"
+            aria-label="Cerca cliente da modificare..."
+          />
+          <div class="input-group-append">
+            <button id="searchButtonEdit" class="btn btn-danger">Cerca</button>
+          </div>
+        </div>
+      </div>
+      <!--Edit client  -->
+      <div id="editClientFormContainer" style="display: none">
+        <form id="editClientForm">
+          <div class="form-group">
+            <input
+              type="text"
+              id="editName"
+              class="form-control"
+              placeholder="Nome"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="editSurname"
+              class="form-control"
+              placeholder="Cognome"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="editTelephone"
+              class="form-control"
+              placeholder="Telefono"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="editSchool"
+              class="form-control"
+              placeholder="Scuola"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="editLocation"
+              class="form-control"
+              placeholder="Luogo"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <textarea
+              id="editNotes"
+              class="form-control"
+              placeholder="Note"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-custom btn-block">
+            Aggiorna
+          </button>
+        </form>
+      </div>
+      <h2 class="mt-4">Elimina Cliente</h2>
       <div class="input-group mb-3">
         <input
           type="text"
-          id="searchClientToEdit"
+          id="searchClientDelete"
           class="form-control"
-          placeholder="Cerca cliente da modificare (Nome e Cognome)"
-          aria-label="Cerca cliente da modificare..."
+          placeholder="Cerca cliente per Nome e Cognome"
+          aria-label="Cerca cliente..."
         />
         <div class="input-group-append">
-          <button id="searchButtonEdit" class="btn btn-danger">Cerca</button>
+          <button id="searchButtonDelete" class="btn btn-danger">Cerca</button>
         </div>
       </div>
-    </div>
-    <!--Edit client  -->
-    <div id="editClientFormContainer" style="display: none">
-      <form id="editClientForm">
-        <div class="form-group">
-          <input
-            type="text"
-            id="editName"
-            class="form-control"
-            placeholder="Nome"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="editSurname"
-            class="form-control"
-            placeholder="Cognome"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="editTelephone"
-            class="form-control"
-            placeholder="Telefono"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="editSchool"
-            class="form-control"
-            placeholder="Scuola"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="editLocation"
-            class="form-control"
-            placeholder="Luogo"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <textarea
-            id="editNotes"
-            class="form-control"
-            placeholder="Note"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn-custom btn-block">Aggiorna</button>
-      </form>
-    </div>
-    <h2>Elimina Cliente</h2>
-    <div class="input-group mb-3">
-      <input
-        type="text"
-        id="searchClientDelete"
-        class="form-control"
-        placeholder="Cerca cliente per Nome e Cognome"
-        aria-label="Cerca cliente..."
-      />
-      <div class="input-group-append">
-        <button id="searchButtonDelete" class="btn btn-danger">Cerca</button>
-      </div>
+
+      <div id="deleteResults" class="search-results"></div>
+      <button
+        id="deleteClientButton"
+        class="btn btn-danger btn-block"
+        style="display: none"
+      >
+        Elimina Cliente
+      </button>
     </div>
 
-    <div id="deleteResults" class="search-results"></div>
-    <button
-      id="deleteClientButton"
-      class="btn btn-danger btn-block"
-      style="display: none"
-    >
-      Elimina Cliente
-    </button>
-
-    <button id="backToTop" class="btn btn-secondary">↑</button>
+    <button id="backToTop" class="btn btn-dark">↑</button>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
