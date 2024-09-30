@@ -48,6 +48,20 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
+app.delete("/api/user/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await User.findByIdAndDelete(id);
+    if (!result) {
+      return res.status(404).send("Utente non trovato");
+    }
+    res.status(200).send("Utente eliminato con successo ✅");
+  } catch (error) {
+    console.error(error); // Add this for logging
+    res.status(500).send("Errore durante l'eliminazione del cliente");
+  }
+});
+
 // Login
 
 app.post("/api/login", async (req, res) => {
