@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- Includi Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa; /* Colore di sfondo */
+      }
+      .login-container {
+        max-width: 400px; /* Larghezza massima del contenitore */
+        margin: 100px auto; /* Centra il contenitore */
+        padding: 20px; /* Padding interno */
+        border-radius: 10px; /* Angoli arrotondati */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+        background-color: white; /* Colore di sfondo del modulo */
+      }
+      #message {
+        margin-top: 15px; /* Margine superiore per il messaggio */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div style="text-align: center; margin-bottom: 20px">
+        <img
+          src="./stepslogo.png"
+          alt="Logo"
+          class="img-fluid"
+          style="max-width: 350px; height: auto"
+        />
+      </div>
+      <h2 class="text-center">Login</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+      <p id="message" class="text-danger text-center"></p>
+    </div>
+
+    <!-- Includi jQuery e Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+      async function loginUser(username, password) {
+        try {
+          const response = await fetch("http://127.0.0.1:4000/api/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Errore nel login");
+          }
+
+          const data = await response.json();
+
+          if (data.accessToken) {
+            localStorage.setItem("token", data.accessToken);
+            loadDashboard();
+          } else {
+            throw new Error("Token non presente nella risposta");
+          }
+        } catch (error) {
+          console.error("Errore nel login:", error.message);
+          document.getElementById("message").textContent = error.message;
+        }
+      }
+
+      async function loadDashboard() {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          window.location.href = "/login";
+          return;
+        }
+
+        try {
+          const response = await fetch("http://127.0.0.1:3000/dashboard", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            const dashboardData = await response.text();
+            document.body.innerHTML = dashboardData;
+
+            const script = document.createElement("script");
+            script.src = "./script.js";
+            document.body.appendChild(script);
+          } else {
+            console.error(
+              "Errore nel caricamento della dashboard",
+              response.status
+            );
+            window.location.href = "/login"; // Reindirizza al login se non autorizzato
+          }
+        } catch (error) {
+          console.error("Errore di rete", error);
+        }
+      }
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", (event) => {
+          event.preventDefault(); // Previeni il comportamento predefinito del modulo
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+          loginUser(username, password); // Chiama la funzione di login
+        });
+    </script>
+  </body>
+</html>

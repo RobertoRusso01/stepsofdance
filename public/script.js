@@ -28,7 +28,14 @@ const deleteResults = document.getElementById("deleteResults");
 const deleteClientButton = document.getElementById("deleteClientButton");
 
 fetchClientsButton.addEventListener("click", async () => {
-  const response = await fetch("http://3.67.185.158:3000/api/clienti/");
+  const token = localStorage.getItem("token");
+  const response = await fetch("http://127.0.0.1:3000/api/clienti", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
   const clients = await response.json();
   clientList.innerHTML = clients
     .map(
@@ -37,6 +44,7 @@ fetchClientsButton.addEventListener("click", async () => {
                 <span>${client.nome}</span>
                 <span>${client.cognome}</span>
                 <span>${client.scuola}</span>
+                <span>${client.luogo}</span>
                 <span>${client.telefono}</span>
                 <span>${client.note}</span>
             </div>
@@ -69,8 +77,16 @@ searchButton.addEventListener("click", async () => {
   const queryString = queryParams.join("&");
 
   // Fai la chiamata API con la query string generata
+  const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryString}`
+    `http://127.0.0.1:3000/api/clienti/search?${queryString}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
   );
 
   // Ricevi i risultati dalla risposta dell'API
@@ -85,6 +101,7 @@ searchButton.addEventListener("click", async () => {
             <span>${client.nome}</span>
             <span>${client.cognome}</span>
             <span>${client.scuola}</span>
+            <span>${client.luogo}</span>
             <span>${client.telefono}</span>
             <span>${client.note}</span>
           </div>
@@ -121,19 +138,19 @@ addClientForm.addEventListener("submit", async (event) => {
   };
 
   // Stampa l'oggetto che stai inviando per debug
-  console.log("Nuovo cliente:", newClient);
 
   try {
-    const response = await fetch("http://3.67.185.158:3000/api/clienti", {
+    const token = localStorage.getItem("token");
+    const response = await fetch("http://127.0.0.1:3000/api/clienti", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newClient),
     });
 
     // Stampa la risposta del server
-    console.log("Risposta dal server:", response);
 
     if (response.ok) {
       alert("Cliente aggiunto con successo!");
@@ -164,8 +181,17 @@ searchButtonSchool.addEventListener("click", async () => {
   const queryParams = [`scuola=${searchTerm}`];
 
   // Fai la chiamata API con la query string generata
+
+  const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`
+    `http://127.0.0.1:3000/api/clienti/search?${queryParams.join("&")}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
   );
 
   // Ricevi i risultati dalla risposta dell'API
@@ -180,6 +206,7 @@ searchButtonSchool.addEventListener("click", async () => {
             <span>${client.nome}</span>
             <span>${client.cognome}</span>
             <span>${client.scuola}</span>
+            <span>${client.luogo}</span>
             <span>${client.telefono}</span>
             <span>${client.note}</span>
           </div>
@@ -210,9 +237,16 @@ searchButtonSurname.addEventListener("click", async () => {
   // Crea la query string dinamica per cercare per cognome
   const queryParams = [`cognome=${searchTerm}`];
 
-  // Fai la chiamata API con la query string generata
+  const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`
+    `http://127.0.0.1:3000/api/clienti/search?${queryParams.join("&")}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
   );
 
   // Ricevi i risultati dalla risposta dell'API
@@ -227,6 +261,7 @@ searchButtonSurname.addEventListener("click", async () => {
             <span>${client.nome}</span>
             <span>${client.cognome}</span>
             <span>${client.scuola}</span>
+            <span>${client.luogo}</span>
             <span>${client.telefono}</span>
             <span>${client.note}</span>
           </div>
@@ -276,8 +311,16 @@ searchButtonEdit.addEventListener("click", async () => {
   const queryString = queryParams.join("&");
 
   // Fai la chiamata API con la query string generata
+  const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryString}`
+    `http://127.0.0.1:3000/api/clienti/search?${queryString}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
   );
   const results = await response.json();
 
@@ -313,9 +356,11 @@ editClientForm.addEventListener("submit", async (event) => {
   };
 
   try {
-    const response = await fetch("http://3.67.185.158:3000/api/clienti", {
+    const token = localStorage.getItem("token");
+    const response = await fetch("http://127.0.0.1:3000/api/clienti", {
       method: "PUT",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedClient),
@@ -352,18 +397,23 @@ searchButtonDelete.addEventListener("click", async () => {
   if (searchTerms[1]) queryParams.push(`cognome=${searchTerms[1]}`);
 
   const queryString = queryParams.join("&");
+  const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryString}`
+    `http://127.0.0.1:3000/api/clienti/search?${queryString}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
   );
-  const results = await response.json();
 
-  console.log("Risultati della ricerca:", results); // Aggiungi questa riga per debug
+  const results = await response.json();
 
   if (results.length > 0) {
     const client = results[0]; // Prendi il primo cliente trovato
     clientIdToDelete = client._id; // Usa '_id' per accedere all'ID corretto
-
-    console.log("ID del cliente da eliminare:", clientIdToDelete); // Dovrebbe ora stampare l'ID corretto
 
     deleteResults.innerHTML = `
       <div class="result-item client-row">
@@ -390,7 +440,7 @@ deleteClientButton.addEventListener("click", async () => {
 
   try {
     const deleteResponse = await fetch(
-      `http://3.67.185.158:3000/api/clienti/${clientIdToDelete}`,
+      `http://127.0.0.1:3000/api/clienti/${clientIdToDelete}`,
       {
         method: "DELETE",
       }
