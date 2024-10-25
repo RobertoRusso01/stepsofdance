@@ -49,6 +49,70 @@ app.post("/api/clienti", verifyToken, async (req, res) => {
   }
 });
 
+// add a product
+
+app.post("/api/clienti/:id/buying", async (req, res) => {
+  const { id } = req.params;
+  const { product, price } = req.body;
+  if (!product || !price) {
+    return res
+      .status(400)
+      .json({ message: "Please select both product and price." });
+  }
+  try {
+    const client = await Client.findById(id);
+    if (!client) {
+      return res.status(404).json({ message: "Cliente non trovato." });
+    }
+    const newBuy = {
+      product,
+      price,
+      date: Date.now(),
+    };
+    client.acquisti.push(newBuy);
+    await client.save();
+    res.status(200).json({
+      message: "Acquisto aggiunto con successo!",
+      acquisti: client.acquisti,
+    });
+  } catch (err) {
+    res.status(404).json({ error: err.message });
+  }
+});
+
+// get incassi
+
+app.get("/api/incassi-oggi", async (req, res) => {
+  try {
+    // Data di inizio e fine per il giorno odierno
+    const inizioOggi = new Date().setHours(0, 0, 0, 0);
+    const fineOggi = new Date().setHours(23, 59, 59, 999);
+
+    // Trova tutti i clienti che hanno acquisti effettuati oggi
+    const clients = await Client.find({
+      "acquisti.date": {
+        $gte: new Date(inizioOggi),
+        $lte: new Date(fineOggi),
+      },
+    });
+
+    // Calcola il totale degli incassi di oggi
+    let totaleIncassi = 0;
+
+    clients.forEach((client) => {
+      client.acquisti.forEach((acquisto) => {
+        if (acquisto.date >= inizioOggi && acquisto.date <= fineOggi) {
+          totaleIncassi += acquisto.price;
+        }
+      });
+    });
+
+    res.status(200).json({ totaleIncassi });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Update a client
 app.put("/api/clienti", verifyToken, async (req, res) => {
   try {
