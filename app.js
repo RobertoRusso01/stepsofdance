@@ -83,7 +83,45 @@ app.post("/api/clienti/:id/buying", async (req, res) => {
 
 // get incassi
 
-app.get("/api/incassi-oggi", async (req, res) => {
+app.get("/api/incassi", verifyToken, async (req, res) => {
+  try {
+    // Prendi le date dai parametri della query
+    const { startDate, endDate } = req.query;
+
+    // Convalida e converti le date
+    const inizioPeriodo = new Date(startDate);
+    const finePeriodo = new Date(endDate);
+
+    if (isNaN(inizioPeriodo) || isNaN(finePeriodo)) {
+      return res.status(400).json({ error: "Date non valide" });
+    }
+
+    // Trova tutti i clienti con acquisti nel periodo specificato
+    const clients = await Client.find({
+      "acquisti.date": {
+        $gte: inizioPeriodo,
+        $lte: finePeriodo,
+      },
+    });
+
+    // Calcola il totale degli incassi nel periodo
+    let totaleIncassi = 0;
+
+    clients.forEach((client) => {
+      client.acquisti.forEach((acquisto) => {
+        if (acquisto.date >= inizioPeriodo && acquisto.date <= finePeriodo) {
+          totaleIncassi += acquisto.price;
+        }
+      });
+    });
+
+    res.status(200).json({ totaleIncassi });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/incassi-oggi", verifyToken, async (req, res) => {
   try {
     // Data di inizio e fine per il giorno odierno
     const inizioOggi = new Date().setHours(0, 0, 0, 0);

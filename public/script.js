@@ -737,3 +737,36 @@ viewDailyIncomeBtn.addEventListener("click", async () => {
 closeDailyIncomeBtn.addEventListener("click", () => {
   dailyIncomeResult.style.display = "none"; // Nascondi il risultato
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const calculateIncomeBtn = document.getElementById("calculateIncome");
+  const incomeAmountRange = document.getElementById("income-amount-range");
+  const dateIncomeResult = document.getElementById("date-income-result");
+
+  calculateIncomeBtn.addEventListener("click", async () => {
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+
+    if (!startDate || !endDate) {
+      alert("Seleziona entrambe le date.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http.//3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`
+      );
+      const data = await response.json();
+
+      if (response.ok) {
+        incomeAmountRange.textContent = data.totaleIncassi.toFixed(2);
+        dateIncomeResult.style.display = "block";
+      } else {
+        alert("Errore: " + data.error);
+      }
+    } catch (error) {
+      console.error("Errore nella richiesta:", error);
+      alert("Si è verificato un errore. Riprova più tardi.");
+    }
+  });
+});
