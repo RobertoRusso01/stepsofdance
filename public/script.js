@@ -29,6 +29,9 @@ const deleteClientButton = document.getElementById("deleteClientButton");
 const searchClientToAddProductInput = document.getElementById(
   "searchClientToAddProduct"
 );
+const searchClientInputToAddProduct = document.getElementById(
+  "searchClientToAddProduct"
+);
 const searchButtonAddProduct = document.getElementById(
   "searchButtonAddProduct"
 );
@@ -36,8 +39,7 @@ const addProductFormContainer = document.getElementById(
   "addProductFormContainer"
 );
 const addProductForm = document.getElementById("addProductForm");
-
-let clientIdForProduct = null;
+let clientIdToAddProduct = null; // Variabile per memorizzare l'ID del cliente da cui aggiungere il prodotto
 
 fetchClientsButton.addEventListener("click", async () => {
   const token = localStorage.getItem("token");
@@ -477,28 +479,23 @@ deleteClientButton.addEventListener("click", async () => {
   }
 });
 
-// Ricerca cliente per aggiungere prodotto
+// Funzione per cercare il cliente
 searchButtonAddProduct.addEventListener("click", async () => {
-  const searchTerm = searchClientToAddProductInput.value.trim();
+  const searchTerm = searchClientInputToAddProduct.value.trim();
 
-  // Controlla se il campo è vuoto
   if (!searchTerm) {
     alert("Inserisci un termine di ricerca.");
     return;
   }
 
-  // Suddividi il termine di ricerca in parole
   const searchTerms = searchTerm.split(" ").filter((term) => term);
-
-  // Crea una query string dinamica
   let queryParams = [];
   if (searchTerms[0]) queryParams.push(`nome=${searchTerms[0]}`);
   if (searchTerms[1]) queryParams.push(`cognome=${searchTerms[1]}`);
 
   const queryString = queryParams.join("&");
-
-  // Fai la chiamata API con la query string generata
   const token = localStorage.getItem("token");
+
   const response = await fetch(
     `http://3.67.185.158:3000/api/clienti/search?${queryString}`,
     {
@@ -514,9 +511,9 @@ searchButtonAddProduct.addEventListener("click", async () => {
 
   if (results.length > 0) {
     const client = results[0]; // Prendi il primo cliente trovato
-    clientIdForProduct = client._id; // Usa '_id' per accedere all'ID corretto
+    clientIdToAddProduct = client._id; // Usa '_id' per accedere all'ID corretto
 
-    // Mostra il form per aggiungere prodotto
+    // Mostra il form di aggiunta prodotto
     addProductFormContainer.style.display = "block";
   } else {
     alert("Nessun cliente trovato.");
@@ -524,27 +521,29 @@ searchButtonAddProduct.addEventListener("click", async () => {
   }
 });
 
-// Gestisci l'aggiunta del prodotto
+// Funzione per aggiungere il prodotto
 addProductForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const newProduct = {
-    nomeArticolo: document.getElementById("productName").value,
-    prezzo: parseFloat(document.getElementById("productPrice").value),
+    nome: document.getElementById("productName").value,
+    prezzo: parseFloat(document.getElementById("productPrice").value), // Assicurati di convertire in numero
     note: document.getElementById("productNotes").value,
-    clienteId: clientIdForProduct, // Associa il prodotto al cliente
   };
 
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`http://3.67.185.158:3000/api/prodotti`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newProduct),
-    });
+    const response = await fetch(
+      `http://3.67.185.158:3000/api/clienti/${clientIdToAddProduct}/prodotti`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProduct),
+      }
+    );
 
     if (response.ok) {
       alert("Prodotto aggiunto con successo!");
