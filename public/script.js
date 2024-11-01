@@ -135,7 +135,9 @@ searchButton.addEventListener("click", async () => {
                 <li class="purchase-item">
                   <p><strong>Prodotto:</strong> ${acquisto.product}</p>
                   <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(2)}</p>
-                  <p><strong>Data d'acquisto:</strong> ${acquisto.date}</p>
+                  <p><strong>Data d'acquisto:</strong> ${new Date(
+                    acquisto.date
+                  ).toLocaleDateString("it-IT")}</p>
                   <p><strong>Note:</strong> ${
                     acquisto.notes || "Nessuna nota"
                   }</p>
