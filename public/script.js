@@ -41,6 +41,10 @@ const addProductFormContainer = document.getElementById(
 const addProductForm = document.getElementById("addProductForm");
 let clientIdToAddProduct = null; // Variabile per memorizzare l'ID del cliente da cui aggiungere il prodotto
 
+const viewDailyIncomeBtn = document.getElementById("view-daily-income-btn");
+const dailyIncomeResult = document.getElementById("daily-income-result");
+const incomeAmount = document.getElementById("income-amount");
+
 fetchClientsButton.addEventListener("click", async () => {
   const token = localStorage.getItem("token");
   const response = await fetch(`http://3.67.185.158:3000/api/clienti`, {
@@ -590,5 +594,22 @@ addProductForm.addEventListener("submit", async (event) => {
   } catch (error) {
     console.error("Errore di rete o di fetch:", error);
     alert("Errore di rete durante l'aggiunta del prodotto.");
+  }
+});
+
+// Aggiungi l'event listener per il clic sul bottone
+viewDailyIncomeBtn.addEventListener("click", async () => {
+  try {
+    const response = await fetch("http://3.67.185.158/api/incassi-oggi");
+    if (response.ok) {
+      const data = await response.json();
+      incomeAmount.textContent = `€${data.incasso.toFixed(2)}`; // Assumendo che la risposta abbia un campo "incasso"
+      dailyIncomeResult.style.display = "block"; // Mostra il risultato
+    } else {
+      throw new Error("Errore nella chiamata API");
+    }
+  } catch (error) {
+    console.error("Errore di rete o di fetch:", error);
+    alert("Errore durante il recupero dell'incasso.");
   }
 });

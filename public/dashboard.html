@@ -147,6 +147,17 @@
       .hidden {
         display: none;
       }
+
+      #daily-income-section {
+        margin-top: 20px;
+      }
+
+      #daily-income-result {
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
     </style>
   </head>
   <body>
@@ -433,6 +444,15 @@
       >
         Elimina Cliente
       </button>
+    </div>
+
+    <div id="daily-income-section">
+      <h2>Visualizza Incasso Giornaliero</h2>
+      <button id="view-daily-income-btn">Mostra Incasso</button>
+      <div id="daily-income-result" style="display: none">
+        <h3>Incasso di Oggi:</h3>
+        <p id="income-amount"></p>
+      </div>
     </div>
 
     <button id="backToTop" class="btn btn-dark">↑</button>
