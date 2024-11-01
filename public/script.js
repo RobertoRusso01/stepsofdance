@@ -60,14 +60,44 @@ fetchClientsButton.addEventListener("click", async () => {
   clientList.innerHTML = clients
     .map(
       (client) => `
-            <div class="client-row">
-                <span>${client.nome}</span>
-                <span>${client.cognome}</span>
-                <span>${client.scuola}</span>
-                <span>${client.luogo}</span>
-                <span>${client.telefono}</span>
-                <span>${client.note}</span>
-            </div>
+            <div class="client-info">
+        <h3>Informazioni Cliente</h3>
+        <div class="client-details">
+          <span><strong>Nome:</strong> ${client.nome}</span><br>
+          <span><strong>Cognome:</strong> ${client.cognome}</span><br>
+          <span><strong>Scuola:</strong> ${client.scuola}</span><br>
+          <span><strong>Luogo:</strong> ${client.luogo}</span><br>
+          <span><strong>Telefono:</strong> ${client.telefono}</span><br>
+          <span><strong>Note:</strong> ${
+            client.note || "Nessuna nota"
+          }</span><br>
+        </div>
+      </div>
+      <div class="purchases">
+        <h3>Acquisti</h3>
+        ${
+          client.acquisti.length > 0
+            ? `<ul class="purchase-list">
+              ${client.acquisti
+                .map(
+                  (acquisto) => `
+                <li class="purchase-item">
+                  <p><strong>Prodotto:</strong> ${acquisto.product}</p>
+                  <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(2)}</p>
+                  <p><strong>Data d'acquisto:</strong> ${new Date(
+                    acquisto.date
+                  ).toLocaleDateString("it-IT")}</p>
+                  <p><strong>Note:</strong> ${
+                    acquisto.notes || "Nessuna nota"
+                  }</p>
+                </li>
+              `
+                )
+                .join("")}
+             </ul>`
+            : "<p>Nessun acquisto registrato</p>"
+        }
+      </div>
         `
     )
     .join("");
@@ -254,14 +284,44 @@ searchButtonSchool.addEventListener("click", async () => {
     searchResultsSchool.innerHTML = results
       .map(
         (client) => `
-          <div class="result-item client-row">
-            <span>${client.nome}</span>
-            <span>${client.cognome}</span>
-            <span>${client.scuola}</span>
-            <span>${client.luogo}</span>
-            <span>${client.telefono}</span>
-            <span>${client.note}</span>
-          </div>
+         <div class="client-info">
+        <h3>Informazioni Cliente</h3>
+        <div class="client-details">
+          <span><strong>Nome:</strong> ${client.nome}</span><br>
+          <span><strong>Cognome:</strong> ${client.cognome}</span><br>
+          <span><strong>Scuola:</strong> ${client.scuola}</span><br>
+          <span><strong>Luogo:</strong> ${client.luogo}</span><br>
+          <span><strong>Telefono:</strong> ${client.telefono}</span><br>
+          <span><strong>Note:</strong> ${
+            client.note || "Nessuna nota"
+          }</span><br>
+        </div>
+      </div>
+      <div class="purchases">
+        <h3>Acquisti</h3>
+        ${
+          client.acquisti.length > 0
+            ? `<ul class="purchase-list">
+              ${client.acquisti
+                .map(
+                  (acquisto) => `
+                <li class="purchase-item">
+                  <p><strong>Prodotto:</strong> ${acquisto.product}</p>
+                  <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(2)}</p>
+                  <p><strong>Data d'acquisto:</strong> ${new Date(
+                    acquisto.date
+                  ).toLocaleDateString("it-IT")}</p>
+                  <p><strong>Note:</strong> ${
+                    acquisto.notes || "Nessuna nota"
+                  }</p>
+                </li>
+              `
+                )
+                .join("")}
+             </ul>`
+            : "<p>Nessun acquisto registrato</p>"
+        }
+      </div>
         `
       )
       .join("");
@@ -311,14 +371,44 @@ searchButtonSurname.addEventListener("click", async () => {
     searchResultsSurname.innerHTML = results
       .map(
         (client) => `
-          <div class="result-item client-row">
-            <span>${client.nome}</span>
-            <span>${client.cognome}</span>
-            <span>${client.scuola}</span>
-            <span>${client.luogo}</span>
-            <span>${client.telefono}</span>
-            <span>${client.note}</span>
-          </div>
+          <div class="client-info">
+        <h3>Informazioni Cliente</h3>
+        <div class="client-details">
+          <span><strong>Nome:</strong> ${client.nome}</span><br>
+          <span><strong>Cognome:</strong> ${client.cognome}</span><br>
+          <span><strong>Scuola:</strong> ${client.scuola}</span><br>
+          <span><strong>Luogo:</strong> ${client.luogo}</span><br>
+          <span><strong>Telefono:</strong> ${client.telefono}</span><br>
+          <span><strong>Note:</strong> ${
+            client.note || "Nessuna nota"
+          }</span><br>
+        </div>
+      </div>
+      <div class="purchases">
+        <h3>Acquisti</h3>
+        ${
+          client.acquisti.length > 0
+            ? `<ul class="purchase-list">
+              ${client.acquisti
+                .map(
+                  (acquisto) => `
+                <li class="purchase-item">
+                  <p><strong>Prodotto:</strong> ${acquisto.product}</p>
+                  <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(2)}</p>
+                  <p><strong>Data d'acquisto:</strong> ${new Date(
+                    acquisto.date
+                  ).toLocaleDateString("it-IT")}</p>
+                  <p><strong>Note:</strong> ${
+                    acquisto.notes || "Nessuna nota"
+                  }</p>
+                </li>
+              `
+                )
+                .join("")}
+             </ul>`
+            : "<p>Nessun acquisto registrato</p>"
+        }
+      </div>
         `
       )
       .join("");
@@ -470,12 +560,43 @@ searchButtonDelete.addEventListener("click", async () => {
     clientIdToDelete = client._id; // Usa '_id' per accedere all'ID corretto
 
     deleteResults.innerHTML = `
-      <div class="result-item client-row">
-        <span>${client.nome}</span>
-        <span>${client.cognome}</span>
-        <span>${client.scuola}</span>
-        <span>${client.telefono}</span>
-        <span>${client.note}</span>
+      <div class="client-info">
+        <h3>Informazioni Cliente</h3>
+        <div class="client-details">
+          <span><strong>Nome:</strong> ${client.nome}</span><br>
+          <span><strong>Cognome:</strong> ${client.cognome}</span><br>
+          <span><strong>Scuola:</strong> ${client.scuola}</span><br>
+          <span><strong>Luogo:</strong> ${client.luogo}</span><br>
+          <span><strong>Telefono:</strong> ${client.telefono}</span><br>
+          <span><strong>Note:</strong> ${
+            client.note || "Nessuna nota"
+          }</span><br>
+        </div>
+      </div>
+      <div class="purchases">
+        <h3>Acquisti</h3>
+        ${
+          client.acquisti.length > 0
+            ? `<ul class="purchase-list">
+              ${client.acquisti
+                .map(
+                  (acquisto) => `
+                <li class="purchase-item">
+                  <p><strong>Prodotto:</strong> ${acquisto.product}</p>
+                  <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(2)}</p>
+                  <p><strong>Data d'acquisto:</strong> ${new Date(
+                    acquisto.date
+                  ).toLocaleDateString("it-IT")}</p>
+                  <p><strong>Note:</strong> ${
+                    acquisto.notes || "Nessuna nota"
+                  }</p>
+                </li>
+              `
+                )
+                .join("")}
+             </ul>`
+            : "<p>Nessun acquisto registrato</p>"
+        }
       </div>
     `;
     deleteClientButton.style.display = "block"; // Mostra il pulsante elimina
