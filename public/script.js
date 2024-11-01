@@ -44,6 +44,8 @@ let clientIdToAddProduct = null; // Variabile per memorizzare l'ID del cliente d
 const viewDailyIncomeBtn = document.getElementById("view-daily-income-btn");
 const dailyIncomeResult = document.getElementById("daily-income-result");
 const incomeAmount = document.getElementById("income-amount");
+const closeDailyIncomeBtn = document.getElementById("close-daily-income");
+const dailyIncomeSection = document.getElementById("daily-income-section");
 
 fetchClientsButton.addEventListener("click", async () => {
   const token = localStorage.getItem("token");
@@ -597,7 +599,7 @@ addProductForm.addEventListener("submit", async (event) => {
   }
 });
 
-// Aggiungi l'event listener per il clic sul bottone
+// Aggiungi l'event listener per il clic sul bottone "Mostra Incasso"
 viewDailyIncomeBtn.addEventListener("click", async () => {
   try {
     const response = await fetch("http://3.67.185.158/api/incassi-oggi");
@@ -612,4 +614,10 @@ viewDailyIncomeBtn.addEventListener("click", async () => {
     console.error("Errore di rete o di fetch:", error);
     alert("Errore durante il recupero dell'incasso.");
   }
+});
+
+// Aggiungi l'event listener per il clic sul bottone "Chiudi"
+closeDailyIncomeBtn.addEventListener("click", () => {
+  dailyIncomeResult.style.display = "none"; // Nascondi il risultato
+  dailyIncomeSection.style.display = "none"; // Nascondi l'intera sezione
 });
