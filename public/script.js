@@ -532,12 +532,12 @@ addProductForm.addEventListener("submit", async (event) => {
   };
 
   console.log(
-    `URL per aggiungere prodotto: http://3.67.185.158:3000/api/clienti/${clientIdToAddProduct}/prodotti`
+    `URL per aggiungere prodotto: http://3.67.185.158:3000/api/clienti/${clientIdToAddProduct}/buying`
   );
   try {
     const token = localStorage.getItem("token");
     const response = await fetch(
-      `http://3.67.185.158:3000/api/clienti/${clientIdToAddProduct}/prodotti`,
+      `http://3.67.185.158:3000/api/clienti/${clientIdToAddProduct}/buying`,
       {
         method: "POST",
         headers: {
