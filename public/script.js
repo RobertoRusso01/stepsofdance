@@ -531,6 +531,9 @@ addProductForm.addEventListener("submit", async (event) => {
     note: document.getElementById("productNotes").value,
   };
 
+  console.log(
+    `URL per aggiungere prodotto: http://3.67.185.158:3000/api/clienti/${clientIdToAddProduct}/prodotti`
+  );
   try {
     const token = localStorage.getItem("token");
     const response = await fetch(
