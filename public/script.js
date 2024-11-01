@@ -112,30 +112,37 @@ searchButton.addEventListener("click", async () => {
       .map(
         (client) => `
           <div class="result-item client-row">
-            <span>${client.nome}</span>
-            <span>${client.cognome}</span>
-            <span>${client.scuola}</span>
-            <span>${client.luogo}</span>
-            <span>${client.telefono}</span>
-            <span>${client.note}</span>
-             <span>
+            <span><strong>Nome:</strong> ${client.nome}</span>
+        <span><strong>Cognome:</strong> ${client.cognome}</span>
+        <span><strong>Scuola:</strong> ${client.scuola}</span>
+        <span><strong>Luogo:</strong> ${client.luogo}</span>
+        <span><strong>Telefono:</strong> ${client.telefono}</span>
+        <span><strong>Note:</strong> ${client.note || "Nessuna nota"}</span>
+        <div class="purchases">
+          <strong>Acquisti:</strong>
           ${
             client.acquisti.length > 0
-              ? client.acquisti
+              ? `<ul class="purchase-list">
+                ${client.acquisti
                   .map(
                     (acquisto) => `
-                <div class="purchase-item">
-                  <p>Prodotto: ${acquisto.product}</p>
-                  <p>Prezzo: ${acquisto.price}</p>
-                  <p>Note: ${acquisto.notes || "Nessuna nota"}</p>
-                </div>
-              `
+                  <li class="purchase-item">
+                    <p><strong>Prodotto:</strong> ${acquisto.product}</p>
+                    <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(
+                      2
+                    )}</p>
+                    <p><strong>Note:</strong> ${
+                      acquisto.notes || "Nessuna nota"
+                    }</p>
+                  </li>
+                `
                   )
-                  .join("")
-              : "Nessun acquisto registrato"
+                  .join("")}
+               </ul>`
+              : "<p>Nessun acquisto registrato</p>"
           }
-        </span>       
-          </div>
+        </div>
+      </div>
         `
       )
       .join("");
