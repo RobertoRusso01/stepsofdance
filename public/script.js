@@ -526,9 +526,9 @@ addProductForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const newProduct = {
-    nome: document.getElementById("productName").value,
-    prezzo: parseFloat(document.getElementById("productPrice").value), // Assicurati di convertire in numero
-    note: document.getElementById("productNotes").value,
+    product: document.getElementById("productName").value,
+    price: parseFloat(document.getElementById("productPrice").value), // Assicurati di convertire in numero
+    notes: document.getElementById("productNotes").value,
   };
 
   console.log(
