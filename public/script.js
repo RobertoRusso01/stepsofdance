@@ -109,48 +109,37 @@ searchButton.addEventListener("click", async () => {
   // Mostra i risultati
   if (results.length > 0) {
     searchResults.innerHTML = results
-      .map(
-        (client) => `
-          <div class="client-info">
-        <h3>Informazioni Cliente</h3>
-        <div class="client-details">
-          <span><strong>Nome:</strong> ${client.nome}</span><br>
-          <span><strong>Cognome:</strong> ${client.cognome}</span><br>
-          <span><strong>Scuola:</strong> ${client.scuola}</span><br>
-          <span><strong>Luogo:</strong> ${client.luogo}</span><br>
-          <span><strong>Telefono:</strong> ${client.telefono}</span><br>
-          <span><strong>Note:</strong> ${client.note || 'Nessuna nota'}</span>
+      .map((client) => `
+        <div class="client-info">
+          <h3>Informazioni Cliente</h3>
+          <div class="client-details">
+            <span><strong>Nome:</strong> ${client.nome}</span><br>
+            <span><strong>Cognome:</strong> ${client.cognome}</span><br>
+            <span><strong>Scuola:</strong> ${client.scuola}</span><br>
+            <span><strong>Luogo:</strong> ${client.luogo}</span><br>
+            <span><strong>Telefono:</strong> ${client.telefono}</span><br>
+            <span><strong>Note:</strong> ${client.note || 'Nessuna nota'}</span>
+          </div>
         </div>
-      </div>
-      <div class="purchases">
-        <h3>Acquisti</h3>
-        ${client.acquisti.length > 0 
-          ? `<ul class="purchase-list">
-              ${client.acquisti.map(acquisto => `
-                <li class="purchase-item">
-                  <p><strong>Prodotto:</strong> ${acquisto.product}</p>
-                  <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(2)}</p>
-                  <p><strong>Note:</strong> ${acquisto.notes || 'Nessuna nota'}</p>
-                </li>
-              `).join('')}
-             </ul>`
-          : '<p>Nessun acquisto registrato</p>'}
-      </div>
-                `
-                  )
-                  .join("")}
+        <div class="purchases">
+          <h3>Acquisti</h3>
+          ${client.acquisti.length > 0 
+            ? `<ul class="purchase-list">
+                ${client.acquisti.map(acquisto => `
+                  <li class="purchase-item">
+                    <p><strong>Prodotto:</strong> ${acquisto.product}</p>
+                    <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(2)}</p>
+                    <p><strong>Note:</strong> ${acquisto.notes || 'Nessuna nota'}</p>
+                  </li>
+                `).join('')}
                </ul>`
-              : "<p>Nessun acquisto registrato</p>"
-          }
+            : '<p>Nessun acquisto registrato</p>'}
         </div>
-      </div>
-        `
-      )
+      `)
       .join("");
   } else {
     searchResults.innerHTML = "<p>Nessun cliente trovato.</p>";
   }
-});
 
 closeSearchButton.addEventListener("click", () => {
   searchResults.innerHTML = "";
