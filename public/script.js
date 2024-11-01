@@ -118,7 +118,23 @@ searchButton.addEventListener("click", async () => {
             <span>${client.luogo}</span>
             <span>${client.telefono}</span>
             <span>${client.note}</span>
-            <span>${client.acquisti}</span>        
+             <span>
+          ${
+            client.acquisti.length > 0
+              ? client.acquisti
+                  .map(
+                    (acquisto) => `
+                <div class="purchase-item">
+                  <p>Prodotto: ${acquisto.product}</p>
+                  <p>Prezzo: ${acquisto.price}</p>
+                  <p>Note: ${acquisto.notes || "Nessuna nota"}</p>
+                </div>
+              `
+                  )
+                  .join("")
+              : "Nessun acquisto registrato"
+          }
+        </span>       
           </div>
         `
       )
