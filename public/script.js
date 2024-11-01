@@ -619,5 +619,4 @@ viewDailyIncomeBtn.addEventListener("click", async () => {
 // Aggiungi l'event listener per il clic sul bottone "Chiudi"
 closeDailyIncomeBtn.addEventListener("click", () => {
   dailyIncomeResult.style.display = "none"; // Nascondi il risultato
-  dailyIncomeSection.style.display = "none"; // Nascondi l'intera sezione
 });
