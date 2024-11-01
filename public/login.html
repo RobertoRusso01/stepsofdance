@@ -71,16 +71,13 @@
     <script>
       async function loginUser(username, password) {
         try {
-          const response = await fetch(
-            `http://${process.env.SERVER_URL}/api/login`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ username, password }),
-            }
-          );
+          const response = await fetch(`http://3.67.185.158/api/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+          });
 
           if (!response.ok) {
             const errorData = await response.json();
@@ -110,15 +107,12 @@
         }
 
         try {
-          const response = await fetch(
-            `http://${process.env.SERVER_URL}/dashboard`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          const response = await fetch(`http://3.67.185.158/dashboard`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
           if (response.ok) {
             const dashboardData = await response.text();
