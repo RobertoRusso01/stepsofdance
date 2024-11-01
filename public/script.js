@@ -61,6 +61,7 @@ fetchClientsButton.addEventListener("click", async () => {
                 <span>${client.luogo}</span>
                 <span>${client.telefono}</span>
                 <span>${client.note}</span>
+                <span>${client.acquisti}</span>
             </div>
         `
     )
