@@ -754,7 +754,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       const response = await fetch(
-        `http.//3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`
+        `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`
       );
       const data = await response.json();
 
