@@ -83,7 +83,7 @@ app.post("/api/clienti/:id/buying", async (req, res) => {
 
 // get incassi
 
-app.get("/api/incassi", verifyToken, async (req, res) => {
+app.get("/api/incassi", async (req, res) => {
   try {
     // Prendi le date dai parametri della query
     const { startDate, endDate } = req.query;
@@ -121,7 +121,7 @@ app.get("/api/incassi", verifyToken, async (req, res) => {
   }
 });
 
-app.get("/api/incassi-oggi", verifyToken, async (req, res) => {
+app.get("/api/incassi-oggi", async (req, res) => {
   try {
     // Data di inizio e fine per il giorno odierno
     const inizioOggi = new Date().setHours(0, 0, 0, 0);
