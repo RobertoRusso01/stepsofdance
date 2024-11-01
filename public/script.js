@@ -603,7 +603,7 @@ viewDailyIncomeBtn.addEventListener("click", async () => {
     const response = await fetch("http://3.67.185.158/api/incassi-oggi");
     if (response.ok) {
       const data = await response.json();
-      incomeAmount.textContent = `€${data.incasso.toFixed(2)}`; // Assumendo che la risposta abbia un campo "incasso"
+      incomeAmount.textContent = `€${data.totaleIncassi}`; // Assumendo che la risposta abbia un campo "incasso"
       dailyIncomeResult.style.display = "block"; // Mostra il risultato
     } else {
       throw new Error("Errore nella chiamata API");
