@@ -29,13 +29,16 @@ const deleteClientButton = document.getElementById("deleteClientButton");
 
 fetchClientsButton.addEventListener("click", async () => {
   const token = localStorage.getItem("token");
-  const response = await fetch("http://127.0.0.1:3000/api/clienti", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `http://${process.env.SERVER_URL}:3000/api/clienti`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const clients = await response.json();
   clientList.innerHTML = clients
     .map(
@@ -79,7 +82,7 @@ searchButton.addEventListener("click", async () => {
   // Fai la chiamata API con la query string generata
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://127.0.0.1:3000/api/clienti/search?${queryString}`,
+    `http://${process.env.SERVER_URL}:3000/api/clienti/search?${queryString}`,
     {
       method: "GET",
       headers: {
@@ -141,14 +144,17 @@ addClientForm.addEventListener("submit", async (event) => {
 
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch("http://127.0.0.1:3000/api/clienti", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newClient),
-    });
+    const response = await fetch(
+      `http://${process.env.SERVER_URL}:3000/api/clienti`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newClient),
+      }
+    );
 
     // Stampa la risposta del server
 
@@ -184,7 +190,9 @@ searchButtonSchool.addEventListener("click", async () => {
 
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://127.0.0.1:3000/api/clienti/search?${queryParams.join("&")}`,
+    `http://${
+      process.env.SERVER_URL
+    }:3000/api/clienti/search?${queryParams.join("&")}`,
     {
       method: "GET",
       headers: {
@@ -239,7 +247,9 @@ searchButtonSurname.addEventListener("click", async () => {
 
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://127.0.0.1:3000/api/clienti/search?${queryParams.join("&")}`,
+    `http://${
+      process.env.SERVER_URL
+    }:3000/api/clienti/search?${queryParams.join("&")}`,
     {
       method: "GET",
       headers: {
@@ -313,7 +323,7 @@ searchButtonEdit.addEventListener("click", async () => {
   // Fai la chiamata API con la query string generata
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://127.0.0.1:3000/api/clienti/search?${queryString}`,
+    `http://${process.env.SERVER_URL}:3000/api/clienti/search?${queryString}`,
     {
       method: "GET",
       headers: {
@@ -357,14 +367,17 @@ editClientForm.addEventListener("submit", async (event) => {
 
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch("http://127.0.0.1:3000/api/clienti", {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedClient),
-    });
+    const response = await fetch(
+      `http://${process.env.SERVER_URL}:3000/api/clienti`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedClient),
+      }
+    );
 
     if (response.ok) {
       alert("Cliente aggiornato con successo!");
@@ -399,7 +412,7 @@ searchButtonDelete.addEventListener("click", async () => {
   const queryString = queryParams.join("&");
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://127.0.0.1:3000/api/clienti/search?${queryString}`,
+    `http://${process.env.SERVER_URL}:3000/api/clienti/search?${queryString}`,
     {
       method: "GET",
       headers: {
@@ -440,7 +453,7 @@ deleteClientButton.addEventListener("click", async () => {
 
   try {
     const deleteResponse = await fetch(
-      `http://127.0.0.1:3000/api/clienti/${clientIdToDelete}`,
+      `http://${process.env.SERVER_URL}:3000/api/clienti/${clientIdToDelete}`,
       {
         method: "DELETE",
       }
