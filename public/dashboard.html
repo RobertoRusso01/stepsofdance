@@ -234,6 +234,59 @@
         </div>
         <button type="submit" class="btn btn-custom btn-block">Aggiungi</button>
       </form>
+      <!-- Form per aggiungere prodotto -->
+
+      <h2 class="mt-4">Aggiungi Prodotto</h2>
+      <div>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            id="searchClientToAddProduct"
+            class="form-control"
+            placeholder="Cerca cliente per aggiungere prodotto (Nome e Cognome)"
+            aria-label="Cerca cliente per aggiungere prodotto..."
+          />
+          <div class="input-group-append">
+            <button id="searchButtonAddProduct" class="btn btn-danger">
+              Cerca
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Form per aggiungere prodotto -->
+      <div id="addProductFormContainer" style="display: none">
+        <form id="addProductForm">
+          <div class="form-group">
+            <input
+              type="text"
+              id="productName"
+              class="form-control"
+              placeholder="Nome Articolo"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="number"
+              id="productPrice"
+              class="form-control"
+              placeholder="Prezzo"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <textarea
+              id="productNotes"
+              class="form-control"
+              placeholder="Note"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-custom btn-block">
+            Aggiungi Prodotto
+          </button>
+        </form>
+      </div>
+
       <h2 class="mt-4">Modifica Cliente</h2>
       <div>
         <div class="input-group mb-3">

@@ -53,11 +53,11 @@ app.post("/api/clienti", verifyToken, async (req, res) => {
 
 app.post("/api/clienti/:id/buying", async (req, res) => {
   const { id } = req.params;
-  const { product, price } = req.body;
+  const { product, price, notes = "" } = req.body;
   if (!product || !price) {
-    return res
-      .status(400)
-      .json({ message: "Please select both product and price." });
+    return res.status(400).json({
+      message: "Please select both product ,price and if needed Notes.",
+    });
   }
   try {
     const client = await Client.findById(id);
@@ -68,6 +68,7 @@ app.post("/api/clienti/:id/buying", async (req, res) => {
       product,
       price,
       date: Date.now(),
+      notes,
     };
     client.acquisti.push(newBuy);
     await client.save();

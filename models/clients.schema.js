@@ -14,6 +14,10 @@ const purchaseSchema = mongoose.Schema({
     required: true,
     default: Date.now,
   },
+  notes: {
+    type: String,
+    required: false,
+  },
 });
 
 const ClientSchema = mongoose.Schema({
