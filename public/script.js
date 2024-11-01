@@ -264,9 +264,7 @@ searchButtonSchool.addEventListener("click", async () => {
 
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://${
-      process.env.SERVER_URL
-    }:3000/api/clienti/search?${queryParams.join("&")}`,
+    `http://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`,
     {
       method: "GET",
       headers: {
@@ -351,9 +349,7 @@ searchButtonSurname.addEventListener("click", async () => {
 
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://${
-      process.env.SERVER_URL
-    }:3000/api/clienti/search?${queryParams.join("&")}`,
+    `http://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`,
     {
       method: "GET",
       headers: {
