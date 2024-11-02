@@ -84,7 +84,7 @@ app.post("/api/clienti/:id/buying", async (req, res) => {
 app.delete("/api/clienti/:id/delete/:productIndex", async (req, res) => {
   const { id, productIndex } = req.params;
   try {
-    const client = await Client.findById(clientId);
+    const client = await Client.findById(id);
     if (!client) {
       return res.status(404).json({ message: "Cliente non trovato." });
     }
