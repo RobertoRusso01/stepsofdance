@@ -190,305 +190,25 @@
 
       <div class="container">
         <h2 class="mt-4">Calcola Incassi per Intervallo di Date</h2>
-        <div
-          id="date-range-income-section"
-          class="row g-3 align-items-center mb-3"
-        >
-          <div class="col-auto">
-            <label for="startDate" class="form-label">Data Inizio:</label>
-            <input type="date" id="startDate" class="form-control" />
-          </div>
+        <div class="row g-3 align-items-center mb-3">
+            <div class="col-auto">
+                <label for="startDate" class="form-label">Data Inizio:</label>
+                <input type="date" id="startDate" class="form-control" />
+            </div>
 
-          <div class="col-auto">
-            <label for="endDate" class="form-label">Data Fine:</label>
-            <input type="date" id="endDate" class="form-control" />
-          </div>
+            <div class="col-auto">
+                <label for="endDate" class="form-label">Data Fine:</label>
+                <input type="date" id="endDate" class="form-control" />
+            </div>
 
-          <div class="col-auto">
-            <button id="calculateIncome" class="btn btn-primary mt-4">
-              Calcola
-            </button>
-          </div>
+            <div class="col-auto">
+                <button onclick="calcolaIncassi()" class="btn btn-primary mt-4">Calcola</button>
+            </div>
         </div>
 
-        <div id="date-income-result" class="mt-3" style="display: none">
-          <h3>Totale Incassi: <span id="income-amount-range">0</span> €</h3>
+        <div id="risultato" class="mt-3">
+            <h3>Totale Incassi: <span id="totale">0</span> €</h3>
         </div>
-      </div>
-
-      <div id="date-income-result" class="mt-3" style="display: none">
-        <h3>Totale Incassi: <span id="income-amount-range"></span> €</h3>
-      </div>
-
-      <button id="fetchClients" class="btn btn-custom btn-block mb-2 mt-4">
-        Visualizza tutti i clienti
-      </button>
-      <button id="closeSearch" class="btn btn-dark btn-block mb-4 mt-4">
-        Chiudi Ricerca
-      </button>
-      <div id="clientList" class="mb-4"></div>
-
-      <h2 class="mt-4">Cerca Cliente</h2>
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          id="searchClient"
-          class="form-control"
-          placeholder="Cerca cliente (Digita Nome e Cognome o solo il Nome)"
-          aria-label="Cerca cliente..."
-        />
-        <div class="input-group-append">
-          <button id="searchButton" class="btn btn-danger">Cerca</button>
-          <button id="closeSearch2" class="btn btn-dark">Chiudi Ricerca</button>
-        </div>
-      </div>
-
-      <div id="searchResults" class="search-results"></div>
-
-      <h2 class="mt-4">Cerca clienti per Cognome</h2>
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          id="searchClientSurname"
-          class="form-control"
-          placeholder="Cerca cognome..."
-          aria-label="Cerca cognome..."
-        />
-        <div class="input-group-append">
-          <button id="searchButtonSurname" class="btn btn-danger">Cerca</button>
-          <button id="closeSearchSurname" class="btn btn-dark">
-            Chiudi Ricerca
-          </button>
-        </div>
-      </div>
-
-      <div id="searchResultsSurname" class="search-results"></div>
-
-      <h2 class="mt-4">Cerca clienti per Scuola</h2>
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          id="searchClientSchool"
-          class="form-control"
-          placeholder="Cerca scuola..."
-          aria-label="Cerca scuola..."
-        />
-        <div class="input-group-append">
-          <button id="searchButtonSchool" class="btn btn-danger">Cerca</button>
-          <button id="closeSearchSchool" class="btn btn-dark">
-            Chiudi Ricerca
-          </button>
-        </div>
-      </div>
-
-      <div id="searchResultsSchool" class="search-results"></div>
-
-      <h2 class="mt-4">Aggiungi Cliente</h2>
-      <form id="addClientForm">
-        <div class="form-group">
-          <input
-            type="text"
-            id="name"
-            class="form-control"
-            placeholder="Nome"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="surname"
-            class="form-control"
-            placeholder="Cognome"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="telephone"
-            class="form-control"
-            placeholder="Telefono"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="school"
-            class="form-control"
-            placeholder="Scuola"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="location"
-            class="form-control"
-            placeholder="Luogo"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <textarea
-            id="notes"
-            class="form-control"
-            placeholder="Note"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn-custom btn-block">Aggiungi</button>
-      </form>
-
-      <h2 class="mt-4">Aggiungi Prodotto</h2>
-      <div>
-        <div class="input-group mb-3">
-          <input
-            type="text"
-            id="searchClientToAddProduct"
-            class="form-control"
-            placeholder="Cerca cliente (Nome e Cognome)"
-            aria-label="Cerca cliente..."
-          />
-          <div class="input-group-append">
-            <button id="searchButtonAddProduct" class="btn btn-danger">
-              Cerca
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Aggiungi Prodotto -->
-      <div id="addProductFormContainer" style="display: none">
-        <form id="addProductForm">
-          <div class="form-group">
-            <input
-              type="text"
-              id="productName"
-              class="form-control"
-              placeholder="Nome Articolo"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="number"
-              id="productPrice"
-              class="form-control"
-              placeholder="Prezzo"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <textarea
-              id="productNotes"
-              class="form-control"
-              placeholder="Note"
-            ></textarea>
-          </div>
-          <button type="submit" class="btn btn-custom btn-block">
-            Aggiungi Prodotto
-          </button>
-        </form>
-      </div>
-
-      <h2 class="mt-4">Modifica Cliente</h2>
-      <div>
-        <div class="input-group mb-3">
-          <input
-            type="text"
-            id="searchClientToEdit"
-            class="form-control"
-            placeholder="Cerca cliente da modificare (Nome e Cognome)"
-            aria-label="Cerca cliente da modificare..."
-          />
-          <div class="input-group-append">
-            <button id="searchButtonEdit" class="btn btn-danger">Cerca</button>
-          </div>
-        </div>
-      </div>
-      <!--Edit client  -->
-      <div id="editClientFormContainer" style="display: none">
-        <form id="editClientForm">
-          <div class="form-group">
-            <input
-              type="text"
-              id="editName"
-              class="form-control"
-              placeholder="Nome"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="text"
-              id="editSurname"
-              class="form-control"
-              placeholder="Cognome"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="text"
-              id="editTelephone"
-              class="form-control"
-              placeholder="Telefono"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="text"
-              id="editSchool"
-              class="form-control"
-              placeholder="Scuola"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="text"
-              id="editLocation"
-              class="form-control"
-              placeholder="Luogo"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <textarea
-              id="editNotes"
-              class="form-control"
-              placeholder="Note"
-            ></textarea>
-          </div>
-          <button type="submit" class="btn btn-custom btn-block">
-            Aggiorna
-          </button>
-        </form>
-      </div>
-      <h2 class="mt-4">Elimina Cliente</h2>
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          id="searchClientDelete"
-          class="form-control"
-          placeholder="Cerca cliente per Nome e Cognome"
-          aria-label="Cerca cliente..."
-        />
-        <div class="input-group-append">
-          <button id="searchButtonDelete" class="btn btn-danger">Cerca</button>
-        </div>
-      </div>
-
-      <div id="deleteResults" class="search-results"></div>
-      <button
-        id="deleteClientButton"
-        class="btn btn-danger btn-block"
-        style="display: none"
-      >
-        Elimina Cliente
-      </button>
     </div>
 
     <button id="backToTop" class="btn btn-dark">↑</button>
@@ -496,114 +216,30 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Recupero elementi DOM
-        const calculateIncomeBtn = document.getElementById("calculateIncome");
-        const incomeAmountRange = document.getElementById(
-          "income-amount-range"
-        );
-        const dateIncomeResult = document.getElementById("date-income-result");
-        const startDateInput = document.getElementById("startDate");
-        const endDateInput = document.getElementById("endDate");
+      async function calcolaIncassi() {
+          // Prendi i valori delle date
+          const startDate = document.getElementById('startDate').value;
+          const endDate = document.getElementById('endDate').value;
 
-        // Verifica elementi DOM
-        if (
-          !calculateIncomeBtn ||
-          !incomeAmountRange ||
-          !dateIncomeResult ||
-          !startDateInput ||
-          !endDateInput
-        ) {
-          console.error("Uno o più elementi non trovati nel DOM.");
-          return;
-        }
-
-        // Funzione per formattare la data nel formato YYYY-MM-DD
-        const formatDate = (date) => {
-          return date.split("T")[0];
-        };
-
-        // Funzione per validare le date
-        const validateDates = (startDate, endDate) => {
-          const start = new Date(startDate);
-          const end = new Date(endDate);
-          return start <= end;
-        };
-
-        // Funzione principale per il calcolo degli incassi
-        const calculateIncome = async (event) => {
-          event.preventDefault(); // Previene il comportamento predefinito
-          console.log("Bottone Calcola Incasso premuto");
-
-          const startDate = formatDate(startDateInput.value);
-          const endDate = formatDate(endDateInput.value);
-
-          // Validazione input
+          // Verifica che le date siano state inserite
           if (!startDate || !endDate) {
-            alert("Seleziona entrambe le date.");
-            return;
-          }
-
-          if (!validateDates(startDate, endDate)) {
-            alert(
-              "La data di inizio deve essere precedente o uguale alla data di fine."
-            );
-            return;
+              alert('Inserisci entrambe le date');
+              return;
           }
 
           try {
-            // Mostra indicatore di caricamento
-            calculateIncomeBtn.disabled = true;
-            calculateIncomeBtn.innerHTML = "Caricamento...";
+              // Fai la chiamata API
+              const response = await fetch(`http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`);
+              const data = await response.json();
 
-            // Chiamata API con gestione CORS
-            const response = await fetch(
-              `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`,
-              {
-                method: "GET",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-            console.log("Risposta API:", response);
-
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log("Dati ricevuti:", data);
-
-            if (data.totaleIncassi !== undefined) {
-              // Formatta il numero con separatore delle migliaia e due decimali
-              const formattedAmount = new Intl.NumberFormat("it-IT", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(data.totaleIncassi);
-
-              incomeAmountRange.textContent = formattedAmount;
-              dateIncomeResult.style.display = "block";
-              console.log("Incasso totale aggiornato e visibile.");
-            } else {
-              throw new Error("Totale incassi non trovato nella risposta");
-            }
+              // Aggiorna il totale
+              document.getElementById('totale').textContent = data.totaleIncassi.toFixed(2);
           } catch (error) {
-            console.error("Errore nella richiesta:", error);
-            alert(`Si è verificato un errore: ${error.message}`);
-          } finally {
-            // Ripristina il bottone
-            calculateIncomeBtn.disabled = false;
-            calculateIncomeBtn.innerHTML = "Calcola";
+              console.error('Errore:', error);
+              alert('Si è verificato un errore nel calcolo degli incassi');
           }
-        };
-
-        // Aggiungi event listener
-        calculateIncomeBtn.addEventListener("click", calculateIncome);
-      });
-    </script>
+      }
+  </script>
     <script src="script.js"></script>
   </body>
   <footer>
