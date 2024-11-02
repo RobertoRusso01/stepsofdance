@@ -4,66 +4,73 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <!-- Includi Bootstrap CSS -->
+    <!-- Include Bootstrap CSS -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
     <style>
       body {
-        background-color: #f8f9fa; /* Colore di sfondo */
+        background-color: #f8f9fa; /* Background color */
       }
       .login-container {
-        max-width: 400px; /* Larghezza massima del contenitore */
-        margin: 100px auto; /* Centra il contenitore */
-        padding: 20px; /* Padding interno */
-        border-radius: 10px; /* Angoli arrotondati */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
-        background-color: white; /* Colore di sfondo del modulo */
+        max-width: 400px; /* Maximum width of the container */
+        margin: 100px auto; /* Center the container */
+        padding: 20px; /* Internal padding */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+        background-color: white; /* Background color of the form */
       }
       #message {
-        margin-top: 15px; /* Margine superiore per il messaggio */
+        margin-top: 15px; /* Top margin for the message */
+      }
+      @media (max-width: 576px) {
+        .login-container {
+          margin: 20px; /* Reduce margin on small screens */
+        }
       }
     </style>
   </head>
   <body>
-    <div class="login-container">
-      <div style="text-align: center; margin-bottom: 20px">
-        <img
-          src="./stepslogo.png"
-          alt="Logo"
-          class="img-fluid"
-          style="max-width: 350px; height: auto"
-        />
+    <div class="container d-flex justify-content-center">
+      <div class="login-container">
+        <div style="text-align: center; margin-bottom: 20px">
+          <img
+            src="./stepslogo.png"
+            alt="Logo"
+            class="img-fluid"
+            style="max-width: 100%; height: auto"
+          />
+        </div>
+        <h2 class="text-center">Login</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              name="username"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <p id="message" class="text-danger text-center"></p>
       </div>
-      <h2 class="text-center">Login</h2>
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="username"
-            name="username"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            required
-          />
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-      </form>
-      <p id="message" class="text-danger text-center"></p>
     </div>
 
-    <!-- Includi jQuery e Bootstrap JS -->
+    <!-- Include jQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -126,7 +133,7 @@
               "Errore nel caricamento della dashboard",
               response.status
             );
-            window.location.href = "/login"; // Reindirizza al login se non autorizzato
+            window.location.href = "/login"; // Redirect to login if not authorized
           }
         } catch (error) {
           console.error("Errore di rete", error);
@@ -136,10 +143,10 @@
       document
         .getElementById("loginForm")
         .addEventListener("submit", (event) => {
-          event.preventDefault(); // Previeni il comportamento predefinito del modulo
+          event.preventDefault(); // Prevent default form behavior
           const username = document.getElementById("username").value;
           const password = document.getElementById("password").value;
-          loginUser(username, password); // Chiama la funzione di login
+          loginUser(username, password); // Call login function
         });
     </script>
   </body>
