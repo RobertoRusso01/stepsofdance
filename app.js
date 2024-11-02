@@ -53,7 +53,7 @@ app.post("/api/clienti", verifyToken, async (req, res) => {
 
 app.post("/api/clienti/:id/buying", async (req, res) => {
   const { id } = req.params;
-  const { product, price, notes = "" } = req.body;
+  const { product, price, notes = "", date } = req.body;
   if (!product || !price) {
     return res.status(400).json({
       message: "Please select both product ,price and if needed Notes.",
@@ -67,7 +67,7 @@ app.post("/api/clienti/:id/buying", async (req, res) => {
     const newBuy = {
       product,
       price,
-      date: Date.now(),
+      date: date ? new Date(date) : Date.now(),
       notes,
     };
     client.acquisti.push(newBuy);
