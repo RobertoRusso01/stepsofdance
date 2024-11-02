@@ -782,3 +782,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+//test
+document.addEventListener("DOMContentLoaded", function () {
+  const calculateIncomeBtn = document.getElementById("calculateIncome");
+
+  if (!calculateIncomeBtn) {
+    console.error("Bottone Calcola non trovato.");
+    return;
+  } else {
+    console.log("Bottone Calcola trovato.");
+  }
+
+  calculateIncomeBtn.addEventListener("click", () => {
+    console.log("Bottone Calcola Incasso premuto");
+    // Continua con il resto della logica qui...
+  });
+});
