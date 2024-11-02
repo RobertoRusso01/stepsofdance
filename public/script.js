@@ -739,74 +739,44 @@ closeDailyIncomeBtn.addEventListener("click", () => {
 });
 
 //aa
+const calculateIncomeBtn = document.getElementById("calculateIncome");
+const incomeAmountDisplay = document.getElementById("income-amount");
+const resultDiv = document.getElementById("result");
+const startDateInput = document.getElementById("startDate");
+const endDateInput = document.getElementById("endDate");
 
-document.addEventListener("DOMContentLoaded", function () {
-  const calculateIncomeBtn = document.getElementById("calculateIncome");
-  const incomeAmountRange = document.getElementById("income-amount-range");
-  const dateIncomeResult = document.getElementById("date-income-result");
-  const startDateInput = document.getElementById("startDate");
-  const endDateInput = document.getElementById("endDate");
+calculateIncomeBtn.addEventListener("click", async function () {
+  const startDate = startDateInput.value;
+  const endDate = endDateInput.value;
 
-  const today = new Date();
-  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  if (!startDate || !endDate) {
+    alert("Seleziona entrambe le date.");
+    return;
+  }
 
-  startDateInput.value = firstDayOfMonth.toISOString().split("T")[0];
-  endDateInput.value = lastDayOfMonth.toISOString().split("T")[0];
+  try {
+    const response = await fetch(
+      `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`
+    );
 
-  if (calculateIncomeBtn) {
-    calculateIncomeBtn.addEventListener("click", async function (event) {
-      event.preventDefault(); // Previene il comportamento predefinito
-      console.log("Pulsante Calcola cliccato");
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || `Errore HTTP: ${response.status}`);
+    }
 
-      try {
-        const startDate = startDateInput.value;
-        const endDate = endDateInput.value;
+    const data = await response.json();
 
-        if (!startDate || !endDate) {
-          alert("Seleziona entrambe le date");
-          return;
-        }
-
-        console.log("Date selezionate:", { startDate, endDate });
-
-        calculateIncomeBtn.disabled = true;
-        calculateIncomeBtn.textContent = "Caricamento...";
-
-        const url = `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`;
-        console.log("URL richiesta:", url);
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || `Errore HTTP: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Dati ricevuti:", data);
-
-        if (data.totaleIncassi !== undefined) {
-          const formattedAmount = new Intl.NumberFormat("it-IT", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          }).format(data.totaleIncassi);
-
-          incomeAmountRange.textContent = formattedAmount;
-          dateIncomeResult.style.display = "block";
-        } else {
-          throw new Error("Dati non validi ricevuti dal server");
-        }
-      } catch (error) {
-        console.error("Errore:", error);
-        alert(
-          "Si è verificato un errore nel calcolo degli incassi: " +
-            error.message
-        );
-      } finally {
-        calculateIncomeBtn.disabled = false;
-        calculateIncomeBtn.textContent = "Calcola";
-      }
-    });
+    if (data.totaleIncassi !== undefined) {
+      incomeAmountDisplay.textContent = new Intl.NumberFormat("it-IT", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(data.totaleIncassi);
+      resultDiv.style.display = "block";
+    } else {
+      throw new Error("Dati non validi ricevuti dal server");
+    }
+  } catch (error) {
+    console.error("Errore:", error);
+    alert("Si è verificato un errore: " + error.message);
   }
 });
