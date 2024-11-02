@@ -756,6 +756,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (calculateIncomeBtn) {
     calculateIncomeBtn.addEventListener("click", async function () {
+      console.log("Pulsante Calcola cliccato"); // Log per controllare il click
       try {
         // Prendi le date dagli input
         const startDate = startDateInput.value; // Sarà già nel formato YYYY-MM-DD
@@ -773,9 +774,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Costruisci l'URL con le date
         const url = `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`;
-        console.log("URL richiesta:", url);
+        console.log("Invio richiesta a:", url); // Log dell'URL
 
         const response = await fetch(url);
+        console.log("Risposta ricevuta:", response); // Log della risposta
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -783,7 +785,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const data = await response.json();
-        console.log("Dati ricevuti:", data);
+        console.log("Dati ricevuti:", data); // Log dei dati ricevuti
 
         if (data.totaleIncassi !== undefined) {
           const formattedAmount = new Intl.NumberFormat("it-IT", {
