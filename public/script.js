@@ -738,7 +738,8 @@ closeDailyIncomeBtn.addEventListener("click", () => {
   dailyIncomeResult.style.display = "none"; // Nascondi il risultato
 });
 
-// Gestione calcolo incassi per intervallo di date
+//aa
+
 document.addEventListener("DOMContentLoaded", function () {
   const calculateIncomeBtn = document.getElementById("calculateIncome");
   const incomeAmountRange = document.getElementById("income-amount-range");
@@ -746,7 +747,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const startDateInput = document.getElementById("startDate");
   const endDateInput = document.getElementById("endDate");
 
-  // Imposta le date di default (opzionale)
   const today = new Date();
   const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
@@ -755,12 +755,13 @@ document.addEventListener("DOMContentLoaded", function () {
   endDateInput.value = lastDayOfMonth.toISOString().split("T")[0];
 
   if (calculateIncomeBtn) {
-    calculateIncomeBtn.addEventListener("click", async function () {
-      console.log("Pulsante Calcola cliccato"); // Log per controllare il click
+    calculateIncomeBtn.addEventListener("click", async function (event) {
+      event.preventDefault(); // Previene il comportamento predefinito
+      console.log("Pulsante Calcola cliccato");
+
       try {
-        // Prendi le date dagli input
-        const startDate = startDateInput.value; // Sarà già nel formato YYYY-MM-DD
-        const endDate = endDateInput.value; // Sarà già nel formato YYYY-MM-DD
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
 
         if (!startDate || !endDate) {
           alert("Seleziona entrambe le date");
@@ -772,12 +773,10 @@ document.addEventListener("DOMContentLoaded", function () {
         calculateIncomeBtn.disabled = true;
         calculateIncomeBtn.textContent = "Caricamento...";
 
-        // Costruisci l'URL con le date
         const url = `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`;
-        console.log("Invio richiesta a:", url); // Log dell'URL
+        console.log("URL richiesta:", url);
 
         const response = await fetch(url);
-        console.log("Risposta ricevuta:", response); // Log della risposta
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -785,7 +784,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const data = await response.json();
-        console.log("Dati ricevuti:", data); // Log dei dati ricevuti
+        console.log("Dati ricevuti:", data);
 
         if (data.totaleIncassi !== undefined) {
           const formattedAmount = new Intl.NumberFormat("it-IT", {
