@@ -737,3 +737,56 @@ viewDailyIncomeBtn.addEventListener("click", async () => {
 closeDailyIncomeBtn.addEventListener("click", () => {
   dailyIncomeResult.style.display = "none"; // Nascondi il risultato
 });
+
+// Gestione calcolo incassi per intervallo di date
+document.addEventListener("DOMContentLoaded", function () {
+  const calculateIncomeBtn = document.getElementById("calculateIncome");
+  const incomeAmountRange = document.getElementById("income-amount-range");
+  const dateIncomeResult = document.getElementById("date-income-result");
+  const startDateInput = document.getElementById("startDate");
+  const endDateInput = document.getElementById("endDate");
+
+  if (calculateIncomeBtn) {
+    calculateIncomeBtn.addEventListener("click", async function () {
+      const startDate = startDateInput.value;
+      const endDate = endDateInput.value;
+
+      if (!startDate || !endDate) {
+        alert("Seleziona entrambe le date");
+        return;
+      }
+
+      try {
+        calculateIncomeBtn.disabled = true;
+        calculateIncomeBtn.textContent = "Caricamento...";
+
+        const response = await fetch(
+          `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Errore HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.totaleIncassi !== undefined) {
+          // Formatta il numero con separatore delle migliaia e due decimali
+          const formattedAmount = new Intl.NumberFormat("it-IT", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }).format(data.totaleIncassi);
+
+          incomeAmountRange.textContent = formattedAmount;
+          dateIncomeResult.style.display = "block";
+        }
+      } catch (error) {
+        console.error("Errore:", error);
+        alert("Si è verificato un errore nel calcolo degli incassi");
+      } finally {
+        calculateIncomeBtn.disabled = false;
+        calculateIncomeBtn.textContent = "Calcola";
+      }
+    });
+  }
+});
