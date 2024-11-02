@@ -33,7 +33,7 @@
     <style>
       body {
         background-color: #f8f9fa;
-        font-family: "Montserrat", sans-serif;
+        font-family: "Montserrat", sans-serif; /* Applicato il nuovo font */
       }
       .container {
         margin-top: 20px;
@@ -42,38 +42,39 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: red;
-        color: white;
-        border: none;
-        font-size: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
+        width: 50px; /* Dimensione del pulsante */
+        height: 50px; /* Dimensione del pulsante */
+        border-radius: 50%; /* Rende il pulsante circolare */
+        background-color: red; /* Colore di sfondo */
+        color: white; /* Colore del testo */
+        border: none; /* Rimuove il bordo */
+        font-size: 24px; /* Dimensione del font */
+        display: flex; /* Centra il contenuto */
+        align-items: center; /* Centra verticalmente */
+        justify-content: center; /* Centra orizzontalmente */
+        z-index: 1000; /* Mantiene il pulsante in alto rispetto agli altri elementi */
       }
       #backToTop:hover {
-        background-color: #0056b3;
+        background-color: #0056b3; /* Colore al passaggio del mouse */
       }
+
       .btn-custom {
-        background-color: #28a745;
+        background-color: #28a745; /* Verde chiaro */
         color: white;
       }
       .btn-custom:hover {
-        background-color: #218838;
+        background-color: #218838; /* Verde scuro */
       }
       .form-control:focus {
-        border-color: #dc3545;
+        border-color: #dc3545; /* Rosso */
         box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
       }
       .result-item {
-        border: 1px solid #dc3545;
+        border: 1px solid #dc3545; /* Rosso */
         padding: 10px;
         margin: 5px 0;
         border-radius: 5px;
-        background-color: #fff;
+        background-color: #fff; /* Bianco */
       }
       .client-row {
         border: 1px solid #ccc;
@@ -82,58 +83,75 @@
         margin: 10px 0;
         background-color: #f9f9f9;
       }
+
       .client-info,
       .purchases {
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 15px;
         margin: 10px 0;
-        background-color: #f0f8ff;
+        background-color: #f0f8ff; /* Colore di sfondo chiaro per il cliente */
       }
+
       .client-info {
-        background-color: #e0f7fa;
+        background-color: #e0f7fa; /* Colore di sfondo per le informazioni del cliente */
       }
+
       .client-details {
-        margin-bottom: 10px;
+        margin-bottom: 10px; /* Margine sotto i dettagli del cliente */
       }
+
       .purchases {
         margin-top: 10px;
         background-color: #ffebee;
       }
+
       .purchase-list {
-        list-style-type: none;
-        padding: 0;
+        list-style-type: none; /* Rimuove i punti dell'elenco */
+        padding: 0; /* Rimuove il padding predefinito */
       }
+
+      .purchase-list {
+        list-style-type: none; /* Rimuove i punti dell'elenco */
+        padding: 0; /* Rimuove il padding predefinito */
+      }
+
       .purchase-item {
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 10px;
         margin: 5px 0;
-        background-color: #fff;
+        background-color: #fff; /* Colore di sfondo bianco per i singoli acquisti */
       }
+
       .purchase-item p {
-        margin: 5px 0;
+        margin: 5px 0; /* Margine per i paragrafi */
       }
+
       h3 {
-        margin: 0 0 10px;
-        color: #333;
+        margin: 0 0 10px; /* Margine per i titoli */
+        color: #333; /* Colore del testo dei titoli */
       }
       .client-row span {
-        text-align: left;
-        margin-bottom: 5px;
+        text-align: left; /* Allinea il testo a sinistra */
+        margin-bottom: 5px; /* Spaziatura verticale */
       }
+
       .client-row span:last-child {
-        margin-bottom: 0;
+        margin-bottom: 0; /* Rimuove il margine dall'ultimo elemento */
       }
+
       .search-results {
         margin-top: 20px;
       }
       .hidden {
         display: none;
       }
+
       #daily-income-section {
         margin-top: 20px;
       }
+
       #daily-income-result {
         margin-top: 10px;
         padding: 10px;
@@ -175,16 +193,14 @@
       </div>
 
       <h3>Calcola incasso per intervalli di tempo</h3>
-      <div class="mb-3">
+      <div>
         <label for="startDate">Data Inizio:</label>
-        <input type="date" id="startDate" class="form-control" required />
+        <input type="date" id="startDate" required />
 
         <label for="endDate">Data Fine:</label>
-        <input type="date" id="endDate" class="form-control" required />
+        <input type="date" id="endDate" required />
 
-        <button id="calculateIncome" class="btn btn-primary mt-3">
-          Calcola
-        </button>
+        <button id="calculateIncome" class="btn btn-primary">Calcola</button>
       </div>
 
       <div id="result" class="alert alert-info" style="display: none">
@@ -277,17 +293,8 @@
         </div>
         <div class="form-group">
           <input
-            type="email"
-            id="email"
-            class="form-control"
-            placeholder="Email"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
             type="text"
-            id="phone"
+            id="telephone"
             class="form-control"
             placeholder="Telefono"
             required
@@ -302,21 +309,188 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-custom btn-block">
-          Aggiungi Cliente
-        </button>
+        <div class="form-group">
+          <input
+            type="text"
+            id="location"
+            class="form-control"
+            placeholder="Luogo"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <textarea
+            id="notes"
+            class="form-control"
+            placeholder="Note"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-custom btn-block">Aggiungi</button>
       </form>
 
-      <div id="message" class="mt-4"></div>
-      <div class="mt-4">
-        <button id="backToTop" class="hidden">↑</button>
+      <h2 class="mt-4">Aggiungi Prodotto</h2>
+      <div>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            id="searchClientToAddProduct"
+            class="form-control"
+            placeholder="Cerca cliente (Nome e Cognome)"
+            aria-label="Cerca cliente..."
+          />
+          <div class="input-group-append">
+            <button id="searchButtonAddProduct" class="btn btn-danger">
+              Cerca
+            </button>
+          </div>
+        </div>
       </div>
+
+      <!-- Aggiungi Prodotto -->
+      <div id="addProductFormContainer" style="display: none">
+        <form id="addProductForm">
+          <div class="form-group">
+            <input
+              type="text"
+              id="productName"
+              class="form-control"
+              placeholder="Nome Articolo"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="number"
+              id="productPrice"
+              class="form-control"
+              placeholder="Prezzo"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <textarea
+              id="productNotes"
+              class="form-control"
+              placeholder="Note"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-custom btn-block">
+            Aggiungi Prodotto
+          </button>
+        </form>
+      </div>
+
+      <h2 class="mt-4">Modifica Cliente</h2>
+      <div>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            id="searchClientToEdit"
+            class="form-control"
+            placeholder="Cerca cliente da modificare (Nome e Cognome)"
+            aria-label="Cerca cliente da modificare..."
+          />
+          <div class="input-group-append">
+            <button id="searchButtonEdit" class="btn btn-danger">Cerca</button>
+          </div>
+        </div>
+      </div>
+      <!--Edit client  -->
+      <div id="editClientFormContainer" style="display: none">
+        <form id="editClientForm">
+          <div class="form-group">
+            <input
+              type="text"
+              id="editName"
+              class="form-control"
+              placeholder="Nome"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="editSurname"
+              class="form-control"
+              placeholder="Cognome"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="editTelephone"
+              class="form-control"
+              placeholder="Telefono"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="editSchool"
+              class="form-control"
+              placeholder="Scuola"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="editLocation"
+              class="form-control"
+              placeholder="Luogo"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <textarea
+              id="editNotes"
+              class="form-control"
+              placeholder="Note"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-custom btn-block">
+            Aggiorna
+          </button>
+        </form>
+      </div>
+      <h2 class="mt-4">Elimina Cliente</h2>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="searchClientDelete"
+          class="form-control"
+          placeholder="Cerca cliente per Nome e Cognome"
+          aria-label="Cerca cliente..."
+        />
+        <div class="input-group-append">
+          <button id="searchButtonDelete" class="btn btn-danger">Cerca</button>
+        </div>
+      </div>
+
+      <div id="deleteResults" class="search-results"></div>
+      <button
+        id="deleteClientButton"
+        class="btn btn-danger btn-block"
+        style="display: none"
+      >
+        Elimina Cliente
+      </button>
     </div>
 
+    <button id="backToTop" class="btn btn-dark">↑</button>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
   </body>
+  <footer>
+    <div>
+      <p class="small text-center mt-5">
+        Powered by Roberto Russo Cloud Architect | Distributed by InSync
+        Creations
+      </p>
+    </div>
+  </footer>
 </html>
