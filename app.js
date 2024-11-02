@@ -81,15 +81,17 @@ app.post("/api/clienti/:id/buying", async (req, res) => {
   }
 });
 
-app.delete("/api/clienti/:id/delete/:productIndex", async (req, res) => {
-  const { id, productIndex } = req.params;
+app.delete("/api/clienti/:id/delete/:productId", async (req, res) => {
+  const { id, productId } = req.params;
   try {
     const client = await Client.findById(id);
     if (!client) {
       return res.status(404).json({ message: "Cliente non trovato." });
     }
+
+    // Cerca l'acquisto tramite il vero _id anziché un indice
     const acquistoIndex = client.acquisti.findIndex(
-      (acquisto) => acquisto._id.toString() === productIndex
+      (acquisto) => acquisto._id.toString() === productId
     );
 
     if (acquistoIndex === -1) {
