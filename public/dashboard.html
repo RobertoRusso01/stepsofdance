@@ -192,23 +192,13 @@
         <h3>Totale Incassi: <span id="income-amount-range"></span> €</h3>
       </div>
 
-      <h2 class="mt-4">Calcola Incassi per Intervallo di Date</h2>
-      <div id="date-range-income-section" class="form-inline mb-3">
+      <h3 class="mt-3">Calcola incasso per intervalli di tempo</h3>
+      <div id="date-range-income-section" class="form-inline mt-4 mb-3">
         <label for="startDate" class="mr-2">Data Inizio:</label>
-        <input
-          type="date"
-          id="startDate"
-          class="form-control mr-2"
-          pattern="\d{4}-\d{2}-\d{2}"
-        />
+        <input type="date" id="startDate" class="form-control mr-2" required />
 
         <label for="endDate" class="mr-2">Data Fine:</label>
-        <input
-          type="date"
-          id="endDate"
-          class="form-control mr-2"
-          pattern="\d{4}-\d{2}-\d{2}"
-        />
+        <input type="date" id="endDate" class="form-control mr-2" required />
 
         <button id="calculateIncome" class="btn btn-custom">Calcola</button>
       </div>

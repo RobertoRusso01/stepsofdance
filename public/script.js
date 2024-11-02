@@ -746,32 +746,46 @@ document.addEventListener("DOMContentLoaded", function () {
   const startDateInput = document.getElementById("startDate");
   const endDateInput = document.getElementById("endDate");
 
+  // Imposta le date di default (opzionale)
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+  startDateInput.value = firstDayOfMonth.toISOString().split("T")[0];
+  endDateInput.value = lastDayOfMonth.toISOString().split("T")[0];
+
   if (calculateIncomeBtn) {
     calculateIncomeBtn.addEventListener("click", async function () {
-      const startDate = startDateInput.value;
-      const endDate = endDateInput.value;
-
-      if (!startDate || !endDate) {
-        alert("Seleziona entrambe le date");
-        return;
-      }
-
       try {
+        // Prendi le date dagli input
+        const startDate = startDateInput.value; // Sarà già nel formato YYYY-MM-DD
+        const endDate = endDateInput.value; // Sarà già nel formato YYYY-MM-DD
+
+        if (!startDate || !endDate) {
+          alert("Seleziona entrambe le date");
+          return;
+        }
+
+        console.log("Date selezionate:", { startDate, endDate });
+
         calculateIncomeBtn.disabled = true;
         calculateIncomeBtn.textContent = "Caricamento...";
 
-        const response = await fetch(
-          `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`
-        );
+        // Costruisci l'URL con le date
+        const url = `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`;
+        console.log("URL richiesta:", url);
+
+        const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error(`Errore HTTP: ${response.status}`);
+          const errorData = await response.json();
+          throw new Error(errorData.error || `Errore HTTP: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log("Dati ricevuti:", data);
 
         if (data.totaleIncassi !== undefined) {
-          // Formatta il numero con separatore delle migliaia e due decimali
           const formattedAmount = new Intl.NumberFormat("it-IT", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
@@ -779,10 +793,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
           incomeAmountRange.textContent = formattedAmount;
           dateIncomeResult.style.display = "block";
+        } else {
+          throw new Error("Dati non validi ricevuti dal server");
         }
       } catch (error) {
         console.error("Errore:", error);
-        alert("Si è verificato un errore nel calcolo degli incassi");
+        alert(
+          "Si è verificato un errore nel calcolo degli incassi: " +
+            error.message
+        );
       } finally {
         calculateIncomeBtn.disabled = false;
         calculateIncomeBtn.textContent = "Calcola";
