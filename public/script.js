@@ -106,27 +106,20 @@ fetchClientsButton.addEventListener("click", async () => {
 searchButton.addEventListener("click", async () => {
   const searchTerm = searchClientInput.value.trim();
 
-  // Controlla se il campo è vuoto
   if (!searchTerm) {
     alert("Inserisci un termine di ricerca.");
     return;
   }
 
-  // Suddividi il termine di ricerca in parole
-  const searchTerms = searchTerm.split(" ").filter((term) => term); // Rimuove eventuali spazi vuoti
+  const searchTerms = searchTerm.split(" ").filter((term) => term);
 
-  // Crea una query string dinamica
   let queryParams = [];
-
-  // Aggiungi ogni termine come possibile filtro, rispettando l'ordine
   if (searchTerms[0]) queryParams.push(`nome=${searchTerms[0]}`);
   if (searchTerms[1]) queryParams.push(`cognome=${searchTerms[1]}`);
   if (searchTerms[2]) queryParams.push(`scuola=${searchTerms[2]}`);
 
-  // Unisci i parametri in una query string
   const queryString = queryParams.join("&");
 
-  // Fai la chiamata API con la query string generata
   const token = localStorage.getItem("token");
   const response = await fetch(
     `http://3.67.185.158:3000/api/clienti/search?${queryString}`,
@@ -139,55 +132,96 @@ searchButton.addEventListener("click", async () => {
     }
   );
 
-  // Ricevi i risultati dalla risposta dell'API
   const results = await response.json();
 
-  // Mostra i risultati
   if (results.length > 0) {
     searchResults.innerHTML = results
       .map(
         (client) => `
          <div class="client-info">
-        <h3>Informazioni Cliente</h3>
-        <div class="client-details">
-          <span><strong>Nome:</strong> ${client.nome}</span><br>
-          <span><strong>Cognome:</strong> ${client.cognome}</span><br>
-          <span><strong>Scuola:</strong> ${client.scuola}</span><br>
-          <span><strong>Luogo:</strong> ${client.luogo}</span><br>
-          <span><strong>Telefono:</strong> ${client.telefono}</span><br>
-          <span><strong>Note:</strong> ${
-            client.note || "Nessuna nota"
-          }</span><br>
-        </div>
-      </div>
-      <div class="purchases">
-        <h3>Acquisti</h3>
-        ${
-          client.acquisti.length > 0
-            ? `<ul class="purchase-list">
-              ${client.acquisti
-                .map(
-                  (acquisto) => `
-                <li class="purchase-item">
-                  <p><strong>Prodotto:</strong> ${acquisto.product}</p>
-                  <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(2)}</p>
-                  <p><strong>Data d'acquisto:</strong> ${new Date(
-                    acquisto.date
-                  ).toLocaleDateString("it-IT")}</p>
-                  <p><strong>Note:</strong> ${
-                    acquisto.notes || "Nessuna nota"
-                  }</p>
-                </li>
-              `
-                )
-                .join("")}
-             </ul>`
-            : "<p>Nessun acquisto registrato</p>"
-        }
-      </div>
+          <h3>Informazioni Cliente</h3>
+          <div class="client-details">
+            <span><strong>Nome:</strong> ${client.nome}</span><br>
+            <span><strong>Cognome:</strong> ${client.cognome}</span><br>
+            <span><strong>Scuola:</strong> ${client.scuola}</span><br>
+            <span><strong>Luogo:</strong> ${client.luogo}</span><br>
+            <span><strong>Telefono:</strong> ${client.telefono}</span><br>
+            <span><strong>Note:</strong> ${
+              client.note || "Nessuna nota"
+            }</span><br>
+          </div>
+          <div class="purchases">
+            <h3>Acquisti</h3>
+            ${
+              client.acquisti.length > 0
+                ? `<ul class="purchase-list">
+                  ${client.acquisti
+                    .map(
+                      (acquisto) => `
+                    <li class="purchase-item">
+                      <p><strong>Prodotto:</strong> ${acquisto.product}</p>
+                      <p><strong>Prezzo:</strong> €${acquisto.price.toFixed(
+                        2
+                      )}</p>
+                      <p><strong>Data d'acquisto:</strong> ${new Date(
+                        acquisto.date
+                      ).toLocaleDateString("it-IT")}</p>
+                      <p><strong>Note:</strong> ${
+                        acquisto.notes || "Nessuna nota"
+                      }</p>
+                      <button class="delete-btn" data-client-id="${
+                        client._id
+                      }" data-product-id="${
+                        acquisto._id
+                      }">Elimina Prodotto</button>
+                    </li>
+                  `
+                    )
+                    .join("")}
+                 </ul>`
+                : "<p>Nessun acquisto registrato</p>"
+            }
+          </div>
+         </div>
         `
       )
       .join("");
+
+    // Aggiungi event listener per ciascun bottone di eliminazione
+    document.querySelectorAll(".delete-btn").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const clientId = button.getAttribute("data-client-id");
+        const productId = button.getAttribute("data-product-id");
+
+        if (confirm("Sei sicuro di voler eliminare questo acquisto?")) {
+          try {
+            const response = await fetch(
+              `http://3.67.185.158:3000/api/clienti/${clientId}/delete/${productId}`,
+              {
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+
+            if (response.ok) {
+              alert("Acquisto eliminato con successo!");
+              // Rimuovi l'elemento dall'HTML
+              button.closest(".purchase-item").remove();
+            } else {
+              const errorData = await response.json();
+              console.error("Errore durante la cancellazione:", errorData);
+              alert("Errore durante l'eliminazione dell'acquisto.");
+            }
+          } catch (error) {
+            console.error("Errore di rete o di fetch:", error);
+            alert("Errore di rete durante l'eliminazione dell'acquisto.");
+          }
+        }
+      });
+    });
   } else {
     searchResults.innerHTML = "<p>Nessun cliente trovato.</p>";
   }
@@ -196,7 +230,7 @@ searchButton.addEventListener("click", async () => {
 closeSearchButton.addEventListener("click", () => {
   searchResults.innerHTML = "";
   searchClientInput.value = "";
-  clientList.innerHTML = ""; // Riporta indietro la lista dei clienti
+  clientList.innerHTML = "";
 });
 
 closeSearchButton2.addEventListener("click", () => {
@@ -792,3 +826,5 @@ calculateIncomeBtn.addEventListener("click", async function () {
 closeResultBtn.addEventListener("click", function () {
   resultDiv.style.display = "none"; // Nascondi il div del risultato
 });
+
+// delete x product
