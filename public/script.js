@@ -743,7 +743,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const incomeAmountRange = document.getElementById("income-amount-range");
   const dateIncomeResult = document.getElementById("date-income-result");
 
+  // Aggiungi controlli per verificare se gli elementi sono presenti
+  if (!calculateIncomeBtn || !incomeAmountRange || !dateIncomeResult) {
+    console.error("Uno o più elementi non trovati nel DOM.");
+    return;
+  }
+
   calculateIncomeBtn.addEventListener("click", async () => {
+    console.log("Bottone Calcola Incasso premuto");
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
 
@@ -758,11 +765,16 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       const data = await response.json();
 
-      if (response.ok) {
+      console.log("Dati ricevuti:", data);
+
+      if (response.ok && data.totaleIncassi !== undefined) {
         incomeAmountRange.textContent = data.totaleIncassi.toFixed(2);
+
+        // Forza la visibilità di dateIncomeResult
         dateIncomeResult.style.display = "block";
+        console.log("Incasso totale aggiornato e visibile.");
       } else {
-        alert("Errore: " + data.error);
+        alert("Errore: " + (data.error || "Risposta non valida dal server."));
       }
     } catch (error) {
       console.error("Errore nella richiesta:", error);
