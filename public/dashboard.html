@@ -478,6 +478,72 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Seleziona gli elementi del DOM
+        const calculateIncomeBtn = document.getElementById("calculateIncome");
+        const incomeAmountRange = document.getElementById(
+          "income-amount-range"
+        );
+        const dateIncomeResult = document.getElementById("date-income-result");
+        const startDateInput = document.getElementById("startDate");
+        const endDateInput = document.getElementById("endDate");
+
+        // Controlla se gli elementi sono presenti
+        if (
+          !calculateIncomeBtn ||
+          !incomeAmountRange ||
+          !dateIncomeResult ||
+          !startDateInput ||
+          !endDateInput
+        ) {
+          console.error("Uno o più elementi non trovati nel DOM.");
+          return;
+        }
+
+        // Funzione per calcolare l'incasso
+        const calculateIncome = async () => {
+          console.log("Bottone Calcola Incasso premuto");
+
+          const startDate = startDateInput.value;
+          const endDate = endDateInput.value;
+
+          // Controlla se le date sono selezionate
+          if (!startDate || !endDate) {
+            alert("Seleziona entrambe le date.");
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`
+            );
+            const data = await response.json();
+
+            console.log("Dati ricevuti:", data);
+
+            if (response.ok && data.totaleIncassi !== undefined) {
+              // Mostra il totale incassi formattato
+              incomeAmountRange.textContent = data.totaleIncassi.toFixed(2);
+
+              // Mostra il risultato
+              dateIncomeResult.style.display = "block";
+              console.log("Incasso totale aggiornato e visibile.");
+            } else {
+              alert(
+                "Errore: " + (data.error || "Risposta non valida dal server.")
+              );
+            }
+          } catch (error) {
+            console.error("Errore nella richiesta:", error);
+            alert("Si è verificato un errore. Riprova più tardi.");
+          }
+        };
+
+        // Aggiungi l'event listener per il bottone "Calcola"
+        calculateIncomeBtn.addEventListener("click", calculateIncome);
+      });
+    </script>
     <script src="script.js"></script>
   </body>
   <footer>
