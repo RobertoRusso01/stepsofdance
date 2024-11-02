@@ -195,10 +195,20 @@
       <h2 class="mt-4">Calcola Incassi per Intervallo di Date</h2>
       <div id="date-range-income-section" class="form-inline mb-3">
         <label for="startDate" class="mr-2">Data Inizio:</label>
-        <input type="date" id="startDate" class="form-control mr-2" />
+        <input
+          type="date"
+          id="startDate"
+          class="form-control mr-2"
+          pattern="\d{4}-\d{2}-\d{2}"
+        />
 
         <label for="endDate" class="mr-2">Data Fine:</label>
-        <input type="date" id="endDate" class="form-control mr-2" />
+        <input
+          type="date"
+          id="endDate"
+          class="form-control mr-2"
+          pattern="\d{4}-\d{2}-\d{2}"
+        />
 
         <button id="calculateIncome" class="btn btn-custom">Calcola</button>
       </div>
