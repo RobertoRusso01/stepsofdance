@@ -169,7 +169,7 @@ searchButton.addEventListener("click", async () => {
                       <p><strong>Note:</strong> ${
                         acquisto.notes || "Nessuna nota"
                       }</p>
-                      <button class="delete-btn" data-client-id="${
+                      <button class="delete-btn btn btn-danger" data-client-id="${
                         client._id
                       }" data-product-id="${
                         acquisto._id
