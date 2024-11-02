@@ -33,7 +33,7 @@
     <style>
       body {
         background-color: #f8f9fa;
-        font-family: "Montserrat", sans-serif; /* Applicato il nuovo font */
+        font-family: "Montserrat", sans-serif;
       }
       .container {
         margin-top: 20px;
@@ -42,39 +42,39 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        width: 50px; /* Dimensione del pulsante */
-        height: 50px; /* Dimensione del pulsante */
-        border-radius: 50%; /* Rende il pulsante circolare */
-        background-color: red; /* Colore di sfondo */
-        color: white; /* Colore del testo */
-        border: none; /* Rimuove il bordo */
-        font-size: 24px; /* Dimensione del font */
-        display: flex; /* Centra il contenuto */
-        align-items: center; /* Centra verticalmente */
-        justify-content: center; /* Centra orizzontalmente */
-        z-index: 1000; /* Mantiene il pulsante in alto rispetto agli altri elementi */
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: red;
+        color: white;
+        border: none;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        display: none; /* Inizialmente nascosto */
       }
       #backToTop:hover {
-        background-color: #0056b3; /* Colore al passaggio del mouse */
+        background-color: #0056b3;
       }
-
       .btn-custom {
-        background-color: #28a745; /* Verde chiaro */
+        background-color: #28a745;
         color: white;
       }
       .btn-custom:hover {
-        background-color: #218838; /* Verde scuro */
+        background-color: #218838;
       }
       .form-control:focus {
-        border-color: #dc3545; /* Rosso */
+        border-color: #dc3545;
         box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
       }
       .result-item {
-        border: 1px solid #dc3545; /* Rosso */
+        border: 1px solid #dc3545;
         padding: 10px;
         margin: 5px 0;
         border-radius: 5px;
-        background-color: #fff; /* Bianco */
+        background-color: #fff;
       }
       .client-row {
         border: 1px solid #ccc;
@@ -83,75 +83,58 @@
         margin: 10px 0;
         background-color: #f9f9f9;
       }
-
       .client-info,
       .purchases {
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 15px;
         margin: 10px 0;
-        background-color: #f0f8ff; /* Colore di sfondo chiaro per il cliente */
+        background-color: #f0f8ff;
       }
-
       .client-info {
-        background-color: #e0f7fa; /* Colore di sfondo per le informazioni del cliente */
+        background-color: #e0f7fa;
       }
-
       .client-details {
-        margin-bottom: 10px; /* Margine sotto i dettagli del cliente */
+        margin-bottom: 10px;
       }
-
       .purchases {
         margin-top: 10px;
         background-color: #ffebee;
       }
-
       .purchase-list {
-        list-style-type: none; /* Rimuove i punti dell'elenco */
-        padding: 0; /* Rimuove il padding predefinito */
+        list-style-type: none;
+        padding: 0;
       }
-
-      .purchase-list {
-        list-style-type: none; /* Rimuove i punti dell'elenco */
-        padding: 0; /* Rimuove il padding predefinito */
-      }
-
       .purchase-item {
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 10px;
         margin: 5px 0;
-        background-color: #fff; /* Colore di sfondo bianco per i singoli acquisti */
+        background-color: #fff;
       }
-
       .purchase-item p {
-        margin: 5px 0; /* Margine per i paragrafi */
+        margin: 5px 0;
       }
-
       h3 {
-        margin: 0 0 10px; /* Margine per i titoli */
-        color: #333; /* Colore del testo dei titoli */
+        margin: 0 0 10px;
+        color: #333;
       }
       .client-row span {
-        text-align: left; /* Allinea il testo a sinistra */
-        margin-bottom: 5px; /* Spaziatura verticale */
+        text-align: left;
+        margin-bottom: 5px;
       }
-
       .client-row span:last-child {
-        margin-bottom: 0; /* Rimuove il margine dall'ultimo elemento */
+        margin-bottom: 0;
       }
-
       .search-results {
         margin-top: 20px;
       }
       .hidden {
         display: none;
       }
-
       #daily-income-section {
         margin-top: 20px;
       }
-
       #daily-income-result {
         margin-top: 10px;
         padding: 10px;
@@ -195,12 +178,14 @@
       <h3>Calcola incasso per intervalli di tempo</h3>
       <div>
         <label for="startDate">Data Inizio:</label>
-        <input type="date" id="startDate" required />
+        <input type="date" id="startDate" class="form-control" required />
 
         <label for="endDate">Data Fine:</label>
-        <input type="date" id="endDate" required />
+        <input type="date" id="endDate" class="form-control" required />
 
-        <button id="calculateIncome" class="btn btn-primary">Calcola</button>
+        <button id="calculateIncome" class="btn btn-primary mt-2">
+          Calcola
+        </button>
       </div>
 
       <div id="result" class="alert alert-info" style="display: none">
@@ -249,7 +234,6 @@
           </button>
         </div>
       </div>
-
       <div id="searchResultsSurname" class="search-results"></div>
 
       <h2 class="mt-4">Cerca clienti per Scuola</h2>
