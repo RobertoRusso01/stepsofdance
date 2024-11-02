@@ -740,10 +740,11 @@ closeDailyIncomeBtn.addEventListener("click", () => {
 
 //aa
 const calculateIncomeBtn = document.getElementById("calculateIncome");
-const incomeAmountDisplay = document.getElementById("income-amount");
+const incomeAmountDisplay = document.getElementById("income-amount-2");
 const resultDiv = document.getElementById("result");
 const startDateInput = document.getElementById("startDate");
 const endDateInput = document.getElementById("endDate");
+const closeResultBtn = document.getElementById("closeResult"); // Aggiungi il selettore per il pulsante di chiusura
 
 calculateIncomeBtn.addEventListener("click", async function () {
   const startDate = startDateInput.value;
@@ -785,4 +786,9 @@ calculateIncomeBtn.addEventListener("click", async function () {
     console.error("Errore:", error);
     alert("Si è verificato un errore: " + error.message);
   }
+});
+
+// Gestisci il clic sul pulsante di chiusura
+closeResultBtn.addEventListener("click", function () {
+  resultDiv.style.display = "none"; // Nascondi il div del risultato
 });

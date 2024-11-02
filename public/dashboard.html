@@ -200,11 +200,12 @@
         <label for="endDate">Data Fine:</label>
         <input type="date" id="endDate" required />
 
-        <button id="calculateIncome">Calcola</button>
+        <button id="calculateIncome" class="btn btn-primary">Calcola</button>
       </div>
 
-      <div id="result" style="display: none">
-        <h3>Totale Incassi: <span id="income-amount"></span> €</h3>
+      <div id="result" class="alert alert-info" style="display: none">
+        <button id="closeResult" class="btn-close" aria-label="Close"></button>
+        <h3>Totale Incassi: <span id="income-amount-2"></span> €</h3>
       </div>
 
       <button id="fetchClients" class="btn btn-custom btn-block mb-2 mt-4">
