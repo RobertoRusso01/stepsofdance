@@ -81,6 +81,34 @@ app.post("/api/clienti/:id/buying", async (req, res) => {
   }
 });
 
+app.delete("/api/clienti/:id/delete/:productIndex", async (req, res) => {
+  const { id, productIndex } = req.params;
+  try {
+    const client = await Client.findById(clientId);
+    if (!client) {
+      return res.status(404).json({ message: "Cliente non trovato." });
+    }
+    const acquistoIndex = client.acquisti.findIndex(
+      (acquisto) => acquisto._id.toString() === productIndex
+    );
+
+    if (acquistoIndex === -1) {
+      return res.status(404).json({ message: "Acquisto non trovato." });
+    }
+
+    // Rimuovi l'elemento dal campo `acquisti`
+    client.acquisti.splice(acquistoIndex, 1);
+    await client.save();
+
+    res.status(200).json({
+      message: "Acquisto eliminato con successo!",
+      acquisti: client.acquisti,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // get incassi
 
 app.get("/api/incassi", async (req, res) => {
