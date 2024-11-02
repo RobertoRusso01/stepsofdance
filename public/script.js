@@ -777,6 +777,7 @@ calculateIncomeBtn.addEventListener("click", async function () {
 
       incomeAmountDisplay.textContent = formattedAmount; // Aggiorniamo il contenuto
       resultDiv.style.display = "block"; // Mostriamo il div del risultato
+      console.log("Result div display:", resultDiv.style.display); // Debug
     } else {
       throw new Error("Dati non validi ricevuti dal server");
     }
