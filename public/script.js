@@ -680,8 +680,9 @@ addProductForm.addEventListener("submit", async (event) => {
 
   const newProduct = {
     product: document.getElementById("productName").value,
-    price: parseFloat(document.getElementById("productPrice").value), // Assicurati di convertire in numero
+    price: parseFloat(document.getElementById("productPrice").value),
     notes: document.getElementById("productNotes").value,
+    date: document.getElementById("calendarDate").value, // Usa la data selezionata dall'utente
   };
 
   console.log(
@@ -715,7 +716,6 @@ addProductForm.addEventListener("submit", async (event) => {
     alert("Errore di rete durante l'aggiunta del prodotto.");
   }
 });
-
 // Aggiungi l'event listener per il clic sul bottone "Mostra Incasso"
 viewDailyIncomeBtn.addEventListener("click", async () => {
   try {
