@@ -766,12 +766,17 @@ calculateIncomeBtn.addEventListener("click", async function () {
 
     const data = await response.json();
 
+    // Controlla se 'totaleIncassi' è presente
     if (data.totaleIncassi !== undefined) {
-      incomeAmountDisplay.textContent = new Intl.NumberFormat("it-IT", {
+      console.log("Totale incassi ricevuto:", data.totaleIncassi);
+
+      const formattedAmount = new Intl.NumberFormat("it-IT", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-      }).format(data.totaleIncassi);
-      resultDiv.style.display = "block";
+      }).format(data.totaleIncassi); // Formattiamo l'importo
+
+      incomeAmountDisplay.textContent = formattedAmount; // Aggiorniamo il contenuto
+      resultDiv.style.display = "block"; // Mostriamo il div del risultato
     } else {
       throw new Error("Dati non validi ricevuti dal server");
     }
