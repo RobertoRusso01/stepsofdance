@@ -753,7 +753,7 @@ addProductForm.addEventListener("submit", async (event) => {
 // Aggiungi l'event listener per il clic sul bottone "Mostra Incasso"
 viewDailyIncomeBtn.addEventListener("click", async () => {
   try {
-    const response = await fetch("http://3.67.185.158/api/incassi-oggi");
+    const response = await fetch("http://3.67.185.158:3000/api/incassi-oggi");
     if (response.ok) {
       const data = await response.json();
       incomeAmount.textContent = `€${data.totaleIncassi}`; // Assumendo che la risposta abbia un campo "incasso"
