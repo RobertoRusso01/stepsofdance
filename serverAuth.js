@@ -64,7 +64,7 @@ app.delete("/api/user/:id", async (req, res) => {
 
 // Login
 
-app.post("/api/login", async (req, res) => {
+app.post("api/login", async (req, res) => {
   const { username, password } = req.body;
   try {
     // 1. Start by looking if the username exist
