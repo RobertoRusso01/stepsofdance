@@ -49,13 +49,16 @@ const dailyIncomeSection = document.getElementById("daily-income-section");
 
 fetchClientsButton.addEventListener("click", async () => {
   const token = localStorage.getItem("token");
-  const response = await fetch(`http://3.67.185.158:3000/api/clienti`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `https://dashboard.stepsofdance.com/api/clienti`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const clients = await response.json();
   clientList.innerHTML = clients
     .map(
@@ -122,7 +125,7 @@ searchButton.addEventListener("click", async () => {
 
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryString}`,
+    `https://dashboard.stepsofdance.com/api/clienti/search?${queryString}`,
     {
       method: "GET",
       headers: {
@@ -196,7 +199,7 @@ searchButton.addEventListener("click", async () => {
         if (confirm("Sei sicuro di voler eliminare questo acquisto?")) {
           try {
             const response = await fetch(
-              `http://3.67.185.158:3000/api/clienti/${clientId}/delete/${productId}`,
+              `https://dashboard.stepsofdance.com/api/clienti/${clientId}/delete/${productId}`,
               {
                 method: "DELETE",
                 headers: {
@@ -255,14 +258,17 @@ addClientForm.addEventListener("submit", async (event) => {
 
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`http://3.67.185.158:3000/api/clienti`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newClient),
-    });
+    const response = await fetch(
+      `https://dashboard.stepsofdance.com/api/clienti`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newClient),
+      }
+    );
 
     // Stampa la risposta del server
 
@@ -298,7 +304,9 @@ searchButtonSchool.addEventListener("click", async () => {
 
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`,
+    `https://dashboard.stepsofdance.com/api/clienti/search?${queryParams.join(
+      "&"
+    )}`,
     {
       method: "GET",
       headers: {
@@ -383,7 +391,9 @@ searchButtonSurname.addEventListener("click", async () => {
 
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryParams.join("&")}`,
+    `https://dashboard.stepsofdance.com/api/clienti/search?${queryParams.join(
+      "&"
+    )}`,
     {
       method: "GET",
       headers: {
@@ -487,7 +497,7 @@ searchButtonEdit.addEventListener("click", async () => {
   // Fai la chiamata API con la query string generata
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryString}`,
+    `https://dashboard.stepsofdance.com/api/clienti/search?${queryString}`,
     {
       method: "GET",
       headers: {
@@ -531,14 +541,17 @@ editClientForm.addEventListener("submit", async (event) => {
 
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`http://3.67.185.158:3000/api/clienti`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedClient),
-    });
+    const response = await fetch(
+      `https://dashboard.stepsofdance.com/api/clienti`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedClient),
+      }
+    );
 
     if (response.ok) {
       alert("Cliente aggiornato con successo!");
@@ -573,7 +586,7 @@ searchButtonDelete.addEventListener("click", async () => {
   const queryString = queryParams.join("&");
   const token = localStorage.getItem("token");
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryString}`,
+    `https://dashboard.stepsofdance.com/api/clienti/search?${queryString}`,
     {
       method: "GET",
       headers: {
@@ -645,7 +658,7 @@ deleteClientButton.addEventListener("click", async () => {
 
   try {
     const deleteResponse = await fetch(
-      `http://3.67.185.158:3000/api/clienti/${clientIdToDelete}`,
+      `https://dashboard.stepsofdance.com/api/clienti/${clientIdToDelete}`,
       {
         method: "DELETE",
       }
@@ -684,7 +697,7 @@ searchButtonAddProduct.addEventListener("click", async () => {
   const token = localStorage.getItem("token");
 
   const response = await fetch(
-    `http://3.67.185.158:3000/api/clienti/search?${queryString}`,
+    `https://dashboard.stepsofdance.com/api/clienti/search?${queryString}`,
     {
       method: "GET",
       headers: {
@@ -720,12 +733,12 @@ addProductForm.addEventListener("submit", async (event) => {
   };
 
   console.log(
-    `URL per aggiungere prodotto: http://3.67.185.158:3000/api/clienti/${clientIdToAddProduct}/buying`
+    `URL per aggiungere prodotto: https://dashboard.stepsofdance.com/api/clienti/${clientIdToAddProduct}/buying`
   );
   try {
     const token = localStorage.getItem("token");
     const response = await fetch(
-      `http://3.67.185.158:3000/api/clienti/${clientIdToAddProduct}/buying`,
+      `https://dashboard.stepsofdance.com/api/clienti/${clientIdToAddProduct}/buying`,
       {
         method: "POST",
         headers: {
@@ -753,7 +766,9 @@ addProductForm.addEventListener("submit", async (event) => {
 // Aggiungi l'event listener per il clic sul bottone "Mostra Incasso"
 viewDailyIncomeBtn.addEventListener("click", async () => {
   try {
-    const response = await fetch("http://3.67.185.158:3000/api/incassi-oggi");
+    const response = await fetch(
+      "https://dashboard.stepsofdance.com/api/incassi-oggi"
+    );
     if (response.ok) {
       const data = await response.json();
       incomeAmount.textContent = `€${data.totaleIncassi}`; // Assumendo che la risposta abbia un campo "incasso"
@@ -791,7 +806,7 @@ calculateIncomeBtn.addEventListener("click", async function () {
 
   try {
     const response = await fetch(
-      `http://3.67.185.158:3000/api/incassi?startDate=${startDate}&endDate=${endDate}`
+      `https://dashboard.stepsofdance.com/api/incassi?startDate=${startDate}&endDate=${endDate}`
     );
 
     if (!response.ok) {
